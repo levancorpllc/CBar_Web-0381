@@ -1038,7 +1038,7 @@ export default function Home() {
 
       {/* ── STICKY CONTACT BUTTON ── */}
       <a
-        href="https://www.levan.com"
+        href="https://www.levancorp.com/contact-us"
         target="_blank"
         rel="noopener noreferrer"
         style={{
