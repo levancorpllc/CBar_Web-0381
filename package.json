@@ -1,5 +1,5 @@
 {
-  "name": "sandbox-website-template",
+  "name": "cbar-web",
   "description": "A template for building a React application with Vite, Hono, and Cloudflare Workers",
   "private": true,
   "dependencies": {
