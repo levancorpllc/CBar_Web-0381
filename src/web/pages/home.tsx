@@ -987,7 +987,7 @@ export default function Home() {
             Contact Levan to configure the right C-Bar for your application.
           </p>
           <a
-            href="https://www.levan.com"
+            href="https://www.levancorp.com/contact-us"
             target="_blank"
             rel="noopener noreferrer"
             style={{
