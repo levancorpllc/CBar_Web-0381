@@ -87,7 +87,7 @@ const STAGES: {
     annotations: [
       {
         id: 3,
-        label: "Ø25 mm Aluminium Body",
+        label: "Ø26 mm Aluminium Body",
         sublabel: "Ultra-compact · precision extruded · heat-optimised",
         dotX: 50,
         dotY: 30,
@@ -102,7 +102,7 @@ const STAGES: {
         angled: true,
       },
     ],
-    title: "25 mm Compact Diameter",
+    title: "26 mm Compact Diameter",
     subtitle: "Precision aluminium housing with integrated mounting groove",
   },
   {
@@ -128,15 +128,15 @@ const STAGES: {
     annotations: [
       {
         id: 6,
-        label: "IP65 Rated",
-        sublabel: "Dust-tight · protected against water jets",
+        label: "IP50 Rated",
+        sublabel: "Standard IP50 · IP64 option available",
         dotX: 50,
         dotY: 50,
         angled: true,
       },
     ],
-    title: "Fully Sealed",
-    subtitle: "IP65 protection for reliable operation in harsh conditions",
+    title: "IP50 Standard",
+    subtitle: "IP50 standard · IP64 option available for harsher environments",
   },
   {
     // Pic 05 — use cbar-new04-nb (same image as pic 04), annotation on left
@@ -145,14 +145,14 @@ const STAGES: {
       {
         id: 7,
         label: "Multiple Colors",
-        sublabel: "White · IR · UV · Blue · Green",
+        sublabel: "White · Red · Green · Blue · IR · UV",
         dotX: 50,
         dotY: 50,
         left: true,
       },
     ],
-    title: "Premium Cree LEDs",
-    subtitle: "High-output Cree emitters — white, infrared, UV, blue and green wavelengths",
+    title: "Six Wavelengths",
+    subtitle: "White, Red, Green, Blue, IR, UV — 50,000h LED lifetime",
   },
   // Pic 06 (cbar-05-rotated) removed
   {
@@ -300,12 +300,12 @@ export default function Home() {
               marginBottom: "48px",
             }}
           >
-            Ø25 mm · Cree LEDs · Diffuser & Polarized filter options
+            Ø26 mm · Direct Mode · Diffuser & Polarized filter options
           </p>
           <div
             style={{ display: "flex", gap: "32px", justifyContent: "center", flexWrap: "wrap" }}
           >
-            {["Ø25mm", "IP65", "24V", "Cree LEDs", "Strobe"].map((tag) => (
+            {["Ø26mm", "IP50", "24V", "LEDs", "Strobe"].map((tag) => (
               <span
                 key={tag}
                 style={{
@@ -572,14 +572,14 @@ export default function Home() {
           }}
         >
           {[
-            { label: "Diameter", value: "Ø25 mm", desc: "Ultra-compact cylindrical body" },
-            { label: "Protection", value: "IP65", desc: "Dust-tight · Water jet resistant" },
-            { label: "Voltage", value: "24V", desc: "Industrial DC standard" },
+            { label: "Diameter", value: "Ø26 mm", desc: "Compact aluminium cylindrical body" },
+            { label: "Protection", value: "IP50", desc: "Standard · IP64 option available" },
+            { label: "Voltage", value: "24V", desc: "24Vdc ±10% industrial standard" },
             { label: "Connector", value: "M8 4-Pin", desc: "Industrial connector · quick release" },
-            { label: "LEDs", value: "Cree", desc: "White · IR · UV · Blue · Green" },
-            { label: "Control", value: "Strobe", desc: "Continuous - Instantaneous Strobe Pulses" },
-            { label: "Housing", value: "Aluminium", desc: "Precision extruded · Heat-optimised" },
-            { label: "Optics", value: "Filter", desc: "Transparent diffuser · Polarized" },
+            { label: "Lifetime", value: "50,000h", desc: "White · Red · IR · UV · Blue · Green" },
+            { label: "Control", value: "Strobe", desc: "Continuous or pulse on Pin C" },
+            { label: "Housing", value: "Aluminium", desc: "Anodised · passive cooling through body" },
+            { label: "Optics", value: "Filter", desc: "Clear diffuser · Polarized option" },
             { label: "Sizes", value: "×4", desc: "15 · 30 · 45 · 60 cm" },
           ].map((spec) => (
             <div
@@ -666,11 +666,10 @@ export default function Home() {
               margin: "0 0 12px",
             }}
           >
-            Premium Cree LEDs
+            Six Wavelengths
           </h2>
           <p style={{ color: "#8892b0", fontSize: "14px", maxWidth: "480px", margin: "0 auto" }}>
-            Every C-Bar uses genuine Cree emitters — industry-leading output, consistency, and lifespan.
-            Five wavelengths available to match any vision application.
+            High-output LEDs with a 50,000h lifetime — six wavelengths available to match any machine vision application.
           </p>
         </div>
 
@@ -682,11 +681,12 @@ export default function Home() {
           }}
         >
           {[
-            { name: "White", nm: "Visible", color: "#f5f0e8", glow: "rgba(245,240,232,0.15)", desc: "Standard machine vision · general inspection" },
+            { name: "White", nm: "4000K std", color: "#f5f0e8", glow: "rgba(245,240,232,0.15)", desc: "Standard machine vision · 2700K & 6500K available" },
+            { name: "Red", nm: "625 nm", color: "#ef4444", glow: "rgba(239,68,68,0.15)", desc: "High contrast on dark surfaces · barcode reading" },
+            { name: "Green", nm: "530 nm", color: "#4ade80", glow: "rgba(74,222,128,0.15)", desc: "Colour contrast · surface detail" },
+            { name: "Blue", nm: "480 nm", color: "#60a5fa", glow: "rgba(96,165,250,0.15)", desc: "High contrast · defect enhancement" },
             { name: "Infrared", nm: "850 nm", color: "#ff6b35", glow: "rgba(255,107,53,0.15)", desc: "Through-barrier · covert imaging" },
             { name: "UV", nm: "365 nm", color: "#a78bfa", glow: "rgba(167,139,250,0.15)", desc: "Fluorescence · defect detection" },
-            { name: "Blue", nm: "470 nm", color: "#60a5fa", glow: "rgba(96,165,250,0.15)", desc: "High contrast · surface detail" },
-            { name: "Green", nm: "525 nm", color: "#4ade80", glow: "rgba(74,222,128,0.15)", desc: "Laser-safe · colour contrast" },
           ].map((led) => (
             <div
               key={led.name}
