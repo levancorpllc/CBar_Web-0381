@@ -59,18 +59,35 @@ const STAGES: {
         dotX: 50,
         dotY: 8,
         angled: true,
+        angledLineLength: [110, -40],
       },
     ],
     title: "Precision Control",
     subtitle: "Strobe & continuous modes with instantaneous trigger response",
   },
   {
-    // Pic 01 — cbar-07-rotated-nb (horizontal bar, center)
+    // Pic 01 — cbar-new04-nb (same image as old pic 05), annotation on left
+    frame: 4,
+    annotations: [
+      {
+        id: 7,
+        label: "Multiple Colors",
+        sublabel: "White · Red · Green · Blue · IR · UV",
+        dotX: 50,
+        dotY: 50,
+        left: true,
+      },
+    ],
+    title: "Six Wavelengths",
+    subtitle: "White, Red, Green, Blue, IR, UV — 50,000h LED lifetime",
+  },
+  {
+    // Pic 02 — cbar-07-rotated-nb (horizontal bar, center)
     frame: 1,
     annotations: [
       {
         id: 2,
-        label: "Transparent Diffuser",
+        label: "PMMA Diffuser",
         sublabel: "Or polarized filter — application specific",
         dotX: 50,
         dotY: 47,
@@ -82,8 +99,56 @@ const STAGES: {
     subtitle: "Transparent diffuser or polarized filter — matched to your inspection needs",
   },
   {
-    // Pic 02 — cbar-06-nb (housing back vertical, center axis)
-    // Both dots at X:50, Ø25mm higher (30%), Groove lower (55%)
+    // Pic 03 — cbar-01-nb (diagonal, center of bar)
+    frame: 7,
+    annotations: [
+      {
+        id: 8,
+        label: "4 Sizes Available",
+        sublabel: "15 cm · 30 cm · 45 cm · 60 cm",
+        dotX: 50,
+        dotY: 50,
+        verticalDown: true,
+      },
+    ],
+    title: "Scale to Your Need",
+    subtitle: "From compact 15 cm to extended 60 cm configurations",
+  },
+  {
+    // Pic 04 — cbar-new04-nb (LED bar vertical, center)
+    frame: 4,
+    annotations: [
+      {
+        id: 6,
+        label: "IP50 Rated",
+        sublabel: "Standard IP50 · IP64 option available",
+        dotX: 50,
+        dotY: 50,
+        angled: true,
+      },
+    ],
+    title: "IP50 Standard",
+    subtitle: "IP50 standard · IP64 option available for harsher environments",
+  },
+  {
+    // Pic 05 — cbar-03-nb (connector face, vertical line, label centered above)
+    frame: 3,
+    annotations: [
+      {
+        id: 5,
+        label: "M8 Connector · 24V",
+        sublabel: "4-pin industrial · quick & secure",
+        dotX: 50,
+        dotY: 52,
+        vertical: true,
+        verticalLineLength: 240,
+      },
+    ],
+    title: "Plug & Go",
+    subtitle: "24V industrial standard with M8 4-pin connector",
+  },
+  {
+    // Pic 06 — cbar-06-nb (housing back vertical, center axis)
     frame: 2,
     annotations: [
       {
@@ -106,72 +171,6 @@ const STAGES: {
     title: "26 mm Compact Diameter",
     subtitle: "Precision aluminium housing with integrated mounting groove",
   },
-  {
-    // Pic 03 — cbar-03-nb (connector face, vertical line, label centered above)
-    frame: 3,
-    annotations: [
-      {
-        id: 5,
-        label: "M8 Connector · 24V",
-        sublabel: "4-pin industrial · quick & secure",
-        dotX: 50,
-        dotY: 52,
-        vertical: true,
-        verticalLineLength: 240,
-      },
-    ],
-    title: "Plug & Go",
-    subtitle: "24V industrial standard with M8 4-pin connector",
-  },
-  {
-    // Pic 04 — cbar-new04-nb (LED bar vertical, center)
-    frame: 4,
-    annotations: [
-      {
-        id: 6,
-        label: "IP50 Rated",
-        sublabel: "Standard IP50 · IP64 option available",
-        dotX: 50,
-        dotY: 50,
-        angled: true,
-      },
-    ],
-    title: "IP50 Standard",
-    subtitle: "IP50 standard · IP64 option available for harsher environments",
-  },
-  {
-    // Pic 05 — use cbar-new04-nb (same image as pic 04), annotation on left
-    frame: 4,
-    annotations: [
-      {
-        id: 7,
-        label: "Multiple Colors",
-        sublabel: "White · Red · Green · Blue · IR · UV",
-        dotX: 50,
-        dotY: 50,
-        left: true,
-      },
-    ],
-    title: "Six Wavelengths",
-    subtitle: "White, Red, Green, Blue, IR, UV — 50,000h LED lifetime",
-  },
-  // Pic 06 (cbar-05-rotated) removed
-  {
-    // Pic 07 → now index 6 — cbar-01-nb (diagonal, center of bar)
-    frame: 7,
-    annotations: [
-      {
-        id: 8,
-        label: "4 Sizes Available",
-        sublabel: "15 cm · 30 cm · 45 cm · 60 cm",
-        dotX: 50,
-        dotY: 50,
-        verticalDown: true,
-      },
-    ],
-    title: "Scale to Your Need",
-    subtitle: "From compact 15 cm to extended 60 cm configurations",
-  },
 ];
 
 interface Config {
@@ -188,7 +187,7 @@ interface Config {
 }
 
 const CONFIG_SECTIONS: {
-  id: keyof Omit<Config, "quantity" | "notes" | "size">;
+  id: keyof Omit<Config, "quantity" | "notes">;
   label: string;
   stageHighlight: number[];
   options: { value: string; label: string; note?: string }[];
@@ -196,7 +195,7 @@ const CONFIG_SECTIONS: {
   {
     id: "model",
     label: "Model",
-    stageHighlight: [],
+    stageHighlight: [0],
     options: [
       { value: "cbar-e", label: "C-Bar E", note: "Legacy model — recommended for most applications" },
       { value: "cbar-s", label: "C-Bar S", note: "Strobe 300% more powerful than C-Bar E" },
@@ -205,7 +204,7 @@ const CONFIG_SECTIONS: {
   {
     id: "color",
     label: "Light Source",
-    stageHighlight: [5],
+    stageHighlight: [1],
     options: [
       { value: "white-4000k", label: "White 4000K (std)" },
       { value: "white-2700k", label: "White 2700K" },
@@ -220,7 +219,7 @@ const CONFIG_SECTIONS: {
   {
     id: "filter",
     label: "Filter",
-    stageHighlight: [1],
+    stageHighlight: [2],
     options: [
       { value: "none",      label: "None" },
       { value: "polarized", label: "Polarized" },
@@ -229,7 +228,7 @@ const CONFIG_SECTIONS: {
   {
     id: "diffuser",
     label: "Diffuser",
-    stageHighlight: [1],
+    stageHighlight: [2],
     options: [
       { value: "clear",      label: "Clear (std)" },
       { value: "satin",      label: "Satin" },
@@ -239,7 +238,7 @@ const CONFIG_SECTIONS: {
   {
     id: "lens",
     label: "Lens",
-    stageHighlight: [],
+    stageHighlight: [2],
     options: [
       { value: "none",      label: "Without" },
       { value: "6deg",      label: "6°" },
@@ -249,6 +248,17 @@ const CONFIG_SECTIONS: {
       { value: "60deg-uv",  label: "60° (UV)" },
       { value: "70deg",     label: "70°" },
       { value: "10x50deg",  label: "10×50°" },
+    ],
+  },
+  {
+    id: "size",
+    label: "Size",
+    stageHighlight: [3],
+    options: [
+      { value: "150mm", label: "15 cm" },
+      { value: "300mm", label: "30 cm" },
+      { value: "450mm", label: "45 cm" },
+      { value: "600mm", label: "60 cm" },
     ],
   },
   {
@@ -263,7 +273,7 @@ const CONFIG_SECTIONS: {
   {
     id: "powerCord",
     label: "Power Cord (M8-4P-F)",
-    stageHighlight: [3],
+    stageHighlight: [5],
     options: [
       { value: "none", label: "Not included" },
       { value: "2m",   label: "2 m" },
@@ -840,7 +850,7 @@ export default function Home() {
               frameIndex={current.frame}
               annotations={current.annotations}
               annotationVisible={annotationVisible}
-              showLightEffect={stage === 5}
+              showLightEffect={stage === 1}
             />
 
             {/* Progress bar */}
@@ -1752,7 +1762,7 @@ function ConfigPanel({
   onSubmit: () => void;
 }) {
   const highlighted = CONFIG_SECTIONS.filter(s => s.stageHighlight.includes(stage)).map(s => s.id);
-  const ready = !!config.model && !!config.color;
+  const ready = !!config.model && !!config.color && !!config.size;
 
   return (
     <div
@@ -1872,7 +1882,7 @@ function ConfigPanel({
           transition: "all 0.2s",
         }}
       >
-        {ready ? "Request a Quote ↗" : "Select a model & light source first"}
+        {ready ? "Request a Quote ↗" : "Select a model, light source & size first"}
       </button>
     </div>
   );
