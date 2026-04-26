@@ -292,14 +292,17 @@ export default function Home() {
     filter: "none", lens: "none", powerCord: "none",
     quantity: "1", notes: "",
   });
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleConfigChange = (key: keyof Config, value: string) =>
     setConfig(prev => ({ ...prev, [key]: value }));
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const label = (id: string, val: string) =>
       CONFIG_SECTIONS.find(s => s.id === id)?.options.find(o => o.value === val)?.label ?? val;
-    const body = [
+    const message = [
       "C-Bar — Quote Request",
       "",
       `Model        : ${label("model", config.model) || "—"}`,
@@ -313,7 +316,24 @@ export default function Home() {
       `Quantity     : ${config.quantity}`,
       config.notes ? `\nNotes:\n${config.notes}` : "",
     ].filter(Boolean).join("\n");
-    window.location.href = `mailto:contact@levancorp.com?subject=C-Bar%20Quote%20Request&body=${encodeURIComponent(body)}`;
+    setFormStatus("submitting");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "a65c85ac-48fd-45dc-8b42-8ca731b26a65",
+          name: contactName,
+          email: contactEmail,
+          subject: "C-Bar Quote Request",
+          message,
+        }),
+      });
+      const data = await res.json();
+      setFormStatus(data.success ? "success" : "error");
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -912,6 +932,11 @@ export default function Home() {
               config={config}
               onChange={handleConfigChange}
               onSubmit={handleSubmit}
+              contactName={contactName}
+              contactEmail={contactEmail}
+              formStatus={formStatus}
+              onNameChange={setContactName}
+              onEmailChange={setContactEmail}
             />
           </div>
         </div>
@@ -1755,14 +1780,24 @@ function ConfigPanel({
   config,
   onChange,
   onSubmit,
+  contactName,
+  contactEmail,
+  formStatus,
+  onNameChange,
+  onEmailChange,
 }: {
   stage: number;
   config: Config;
   onChange: (key: keyof Config, value: string) => void;
   onSubmit: () => void;
+  contactName: string;
+  contactEmail: string;
+  formStatus: "idle" | "submitting" | "success" | "error";
+  onNameChange: (v: string) => void;
+  onEmailChange: (v: string) => void;
 }) {
   const highlighted = CONFIG_SECTIONS.filter(s => s.stageHighlight.includes(stage)).map(s => s.id);
-  const ready = !!config.model && !!config.color && !!config.size;
+  const ready = !!config.model && !!config.color && !!config.size && !!contactName && !!contactEmail;
 
   return (
     <div
@@ -1863,27 +1898,60 @@ function ConfigPanel({
         />
       </div>
 
+      {/* Contact info */}
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)", display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>
+          Your Contact
+        </div>
+        <input
+          type="text"
+          placeholder="Name"
+          value={contactName}
+          onChange={e => onNameChange(e.target.value)}
+          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={contactEmail}
+          onChange={e => onEmailChange(e.target.value)}
+          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
+        />
+      </div>
+
       {/* Submit */}
-      <button
-        onClick={ready ? onSubmit : undefined}
-        style={{
-          marginTop: "4px",
-          padding: "14px 20px",
-          background: ready ? "#404B71" : "rgba(64,75,113,0.2)",
-          border: `1px solid ${ready ? "rgba(126,179,255,0.3)" : "rgba(90,106,158,0.15)"}`,
-          borderRadius: "8px",
-          color: ready ? "#fff" : "#5a6a9e",
-          fontSize: "14px",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          fontFamily: "'Barlow Condensed', sans-serif",
-          fontWeight: 600,
-          cursor: ready ? "pointer" : "default",
-          transition: "all 0.2s",
-        }}
-      >
-        {ready ? "Request a Quote ↗" : "Select a model, light source & size first"}
-      </button>
+      {formStatus === "success" ? (
+        <div style={{ marginTop: "4px", padding: "14px 20px", borderRadius: "8px", border: "1px solid rgba(126,179,255,0.3)", background: "rgba(64,75,113,0.2)", color: "#7eb3ff", fontSize: "14px", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, textAlign: "center" }}>
+          Thank you for your submission, please wait 1 business day
+        </div>
+      ) : (
+        <button
+          onClick={ready && formStatus !== "submitting" ? onSubmit : undefined}
+          style={{
+            marginTop: "4px",
+            padding: "14px 20px",
+            background: ready ? "#404B71" : "rgba(64,75,113,0.2)",
+            border: `1px solid ${ready ? "rgba(126,179,255,0.3)" : "rgba(90,106,158,0.15)"}`,
+            borderRadius: "8px",
+            color: ready ? "#fff" : "#5a6a9e",
+            fontSize: "14px",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontWeight: 600,
+            cursor: ready && formStatus !== "submitting" ? "pointer" : "default",
+            transition: "all 0.2s",
+          }}
+        >
+          {formStatus === "submitting"
+            ? "Sending…"
+            : formStatus === "error"
+            ? "Failed — try again"
+            : ready
+            ? "Request a Quote ↗"
+            : "Select a model, light source & size first"}
+        </button>
+      )}
     </div>
   );
 }
