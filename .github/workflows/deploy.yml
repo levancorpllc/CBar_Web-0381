@@ -17,7 +17,7 @@ jobs:
         run: bun install
 
       - name: Build
-        run: bunx vite build
+        run: bunx vite build --base=/CBar_Web-0381/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
