@@ -174,10 +174,137 @@ const STAGES: {
   },
 ];
 
+interface Config {
+  model: string;
+  color: string;
+  size: string;
+  ip: string;
+  diffuser: string;
+  filter: string;
+  lens: string;
+  powerCord: string;
+  quantity: string;
+  notes: string;
+}
+
+const CONFIG_SECTIONS: {
+  id: keyof Omit<Config, "quantity" | "notes" | "size">;
+  label: string;
+  stageHighlight: number[];
+  options: { value: string; label: string; note?: string }[];
+}[] = [
+  {
+    id: "model",
+    label: "Model",
+    stageHighlight: [],
+    options: [
+      { value: "cbar-e", label: "C-Bar E", note: "Legacy model — recommended for most applications" },
+      { value: "cbar-s", label: "C-Bar S", note: "Strobe 300% more powerful than C-Bar E" },
+    ],
+  },
+  {
+    id: "color",
+    label: "Light Source",
+    stageHighlight: [5],
+    options: [
+      { value: "white-4000k", label: "White 4000K (std)" },
+      { value: "white-2700k", label: "White 2700K" },
+      { value: "white-6500k", label: "White 6500K" },
+      { value: "red-625",     label: "Red 625 nm" },
+      { value: "green-530",   label: "Green 530 nm" },
+      { value: "blue-480",    label: "Blue 480 nm" },
+      { value: "ir-850",      label: "IR 850 nm" },
+      { value: "uv-365",      label: "UV 365 nm" },
+    ],
+  },
+  {
+    id: "filter",
+    label: "Filter",
+    stageHighlight: [1],
+    options: [
+      { value: "none",      label: "None" },
+      { value: "polarized", label: "Polarized" },
+    ],
+  },
+  {
+    id: "diffuser",
+    label: "Diffuser",
+    stageHighlight: [1],
+    options: [
+      { value: "clear",      label: "Clear (std)" },
+      { value: "satin",      label: "Satin" },
+      { value: "white-opal", label: "White Opal" },
+    ],
+  },
+  {
+    id: "lens",
+    label: "Lens",
+    stageHighlight: [],
+    options: [
+      { value: "none",      label: "Without" },
+      { value: "6deg",      label: "6°" },
+      { value: "15deg",     label: "15°" },
+      { value: "25deg",     label: "25°" },
+      { value: "45deg",     label: "45°" },
+      { value: "60deg-uv",  label: "60° (UV)" },
+      { value: "70deg",     label: "70°" },
+      { value: "10x50deg",  label: "10×50°" },
+    ],
+  },
+  {
+    id: "ip",
+    label: "IP Protection",
+    stageHighlight: [4],
+    options: [
+      { value: "ip50", label: "IP50 (standard)" },
+      { value: "ip64", label: "IP64 (option)" },
+    ],
+  },
+  {
+    id: "powerCord",
+    label: "Power Cord (M8-4P-F)",
+    stageHighlight: [3],
+    options: [
+      { value: "none", label: "Not included" },
+      { value: "2m",   label: "2 m" },
+      { value: "5m",   label: "5 m" },
+      { value: "10m",  label: "10 m" },
+    ],
+  },
+];
+
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState(0);
   const [annotationVisible, setAnnotationVisible] = useState(false);
+  const [config, setConfig] = useState<Config>({
+    model: "", color: "", size: "", ip: "ip50", diffuser: "clear",
+    filter: "none", lens: "none", powerCord: "none",
+    quantity: "1", notes: "",
+  });
+
+  const handleConfigChange = (key: keyof Config, value: string) =>
+    setConfig(prev => ({ ...prev, [key]: value }));
+
+  const handleSubmit = () => {
+    const label = (id: string, val: string) =>
+      CONFIG_SECTIONS.find(s => s.id === id)?.options.find(o => o.value === val)?.label ?? val;
+    const body = [
+      "C-Bar — Quote Request",
+      "",
+      `Model        : ${label("model", config.model) || "—"}`,
+      `Light Source : ${label("color", config.color) || "—"}`,
+      `Filter       : ${label("filter", config.filter)}`,
+      `Diffuser     : ${label("diffuser", config.diffuser)}`,
+      `Lens         : ${label("lens", config.lens)}`,
+      `IP Protection: ${label("ip", config.ip)}`,
+      `Power Cord   : ${label("powerCord", config.powerCord)}`,
+      `Size         : ${label("size", config.size) || "—"}`,
+      `Quantity     : ${config.quantity}`,
+      config.notes ? `\nNotes:\n${config.notes}` : "",
+    ].filter(Boolean).join("\n");
+    window.location.href = `mailto:contact@levancorp.com?subject=C-Bar%20Quote%20Request&body=${encodeURIComponent(body)}`;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -257,11 +384,11 @@ export default function Home() {
         >
           <div
             style={{
-              fontSize: "15px",
+              fontSize: "20px",
               letterSpacing: "0.35em",
               color: "#7eb3ff",
               textTransform: "uppercase",
-              marginBottom: "24px",
+              marginBottom: "28px",
               fontFamily: "'JetBrains Mono', monospace",
             }}
           >
@@ -269,7 +396,7 @@ export default function Home() {
           </div>
           <h1
             style={{
-              fontSize: "clamp(100px,16vw,200px)",
+              fontSize: "clamp(130px,20vw,260px)",
               fontFamily: "'Barlow Condensed', sans-serif",
               fontWeight: 700,
               letterSpacing: "-0.02em",
@@ -284,7 +411,7 @@ export default function Home() {
           </h1>
           <p
             style={{
-              fontSize: "clamp(16px,2.5vw,26px)",
+              fontSize: "clamp(20px,3.2vw,36px)",
               color: "#8892b0",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
@@ -295,22 +422,22 @@ export default function Home() {
           </p>
           <p
             style={{
-              fontSize: "clamp(14px,1.8vw,18px)",
+              fontSize: "clamp(16px,2.2vw,24px)",
               color: "#5a6a9e",
               letterSpacing: "0.04em",
               marginBottom: "56px",
             }}
           >
-            Ø26 mm · Direct Mode · Diffuser & Polarized filter options
+            With Diffuser & Polarized filter options
           </p>
           <div
             style={{ display: "flex", gap: "40px", justifyContent: "center", flexWrap: "wrap" }}
           >
-            {["Ø26mm", "IP50", "24V", "LEDs", "Strobe"].map((tag) => (
+            {["Ø26mm", "IP50/64", "24V", "LEDs", "Strobe"].map((tag) => (
               <span
                 key={tag}
                 style={{
-                  fontSize: "15px",
+                  fontSize: "18px",
                   letterSpacing: "0.2em",
                   color: "#5a6a9e",
                   borderBottom: "1px solid rgba(90,106,158,0.4)",
@@ -354,170 +481,6 @@ export default function Home() {
           />
         </div>
       </section>
-
-      {/* ── STICKY SCROLL SECTION ── */}
-      <div
-        ref={scrollRef}
-        style={{ height: `${STAGES.length * 70}vh`, position: "relative" }}
-      >
-
-        <div
-          style={{
-            position: "sticky",
-            top: 0,
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
-          {/* BG grid */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage: `
-                linear-gradient(rgba(90,106,158,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(90,106,158,0.05) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          {/* Stage title */}
-          <div
-            style={{
-              position: "absolute",
-              top: "clamp(28px,5vh,52px)",
-              textAlign: "center",
-              padding: "0 16px",
-              transition: "opacity 0.4s, transform 0.4s",
-              opacity: annotationVisible ? 1 : 0,
-              transform: annotationVisible ? "translateY(0)" : "translateY(-10px)",
-              zIndex: 10,
-            }}
-          >
-            <div
-              style={{
-                fontSize: "10px",
-                letterSpacing: "0.4em",
-                color: "#7eb3ff",
-                textTransform: "uppercase",
-                fontFamily: "'JetBrains Mono', monospace",
-                marginBottom: "8px",
-              }}
-            >
-              {String(stage).padStart(2, "0")} /{" "}
-              {String(STAGES.length - 1).padStart(2, "0")}
-            </div>
-            <h2
-              style={{
-                fontSize: "clamp(20px,3.5vw,40px)",
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 700,
-                letterSpacing: "0.02em",
-                margin: 0,
-                color: "#fff",
-              }}
-            >
-              {current.title}
-            </h2>
-            <p
-              style={{
-                fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#8892b0",
-                marginTop: "6px",
-                letterSpacing: "0.04em",
-                maxWidth: "400px",
-                margin: "6px auto 0",
-              }}
-            >
-              {current.subtitle}
-            </p>
-          </div>
-
-          {/* Product + annotation wrapper */}
-          <ProductViewer
-            frameIndex={current.frame}
-            annotations={current.annotations}
-            annotationVisible={annotationVisible}
-            showLightEffect={stage === 5}
-          />
-
-          {/* Progress bar */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "clamp(20px,4vh,44px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <div
-              style={{
-                width: "clamp(120px,30vw,200px)",
-                height: "2px",
-                background: "rgba(90,106,158,0.2)",
-                borderRadius: "1px",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  height: "100%",
-                  width: `${progressPercent * 100}%`,
-                  background: "linear-gradient(90deg, #404B71, #7eb3ff)",
-                  borderRadius: "1px",
-                  transition: "width 0.4s ease",
-                }}
-              />
-            </div>
-            <span
-              style={{
-                fontSize: "10px",
-                fontFamily: "'JetBrains Mono', monospace",
-                color: "#5a6a9e",
-                letterSpacing: "0.2em",
-              }}
-            >
-              {Math.round(progressPercent * 100)}%
-            </span>
-          </div>
-
-          {/* Side dots */}
-          <div
-            style={{
-              position: "absolute",
-              right: "clamp(12px,3vw,32px)",
-              top: "50%",
-              transform: "translateY(-50%)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            {STAGES.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: i === stage ? "8px" : "4px",
-                  height: i === stage ? "8px" : "4px",
-                  borderRadius: "50%",
-                  background:
-                    i === stage ? "#7eb3ff" : "rgba(90,106,158,0.4)",
-                  transition: "all 0.3s ease",
-                  boxShadow:
-                    i === stage ? "0 0 8px rgba(126,179,255,0.6)" : "none",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* ── SPECS ── */}
       <section
@@ -573,15 +536,16 @@ export default function Home() {
           }}
         >
           {[
-            { label: "Diameter", value: "Ø26 mm", desc: "Compact aluminium cylindrical body" },
-            { label: "Protection", value: "IP50", desc: "Standard · IP64 option available" },
             { label: "Voltage", value: "24V", desc: "24Vdc ±10% industrial standard" },
-            { label: "Connector", value: "M8 4-Pin", desc: "Industrial connector · quick release" },
+            { label: "Control", value: "Strobe", desc: "Continuous lighting\n& Strobe pulse" },
             { label: "Lifetime", value: "50,000h", desc: "White · Red · IR · UV · Blue · Green" },
-            { label: "Control", value: "Strobe", desc: "Continuous or pulse on Pin C" },
             { label: "Housing", value: "Aluminium", desc: "Anodised · passive cooling through body" },
-            { label: "Optics", value: "Filter", desc: "Clear diffuser · Polarized option" },
+            { label: "Connector", value: "M8 4-Pin", desc: "Industrial connector · quick release" },
+            { label: "Diameter", value: "Ø26 mm", desc: "Compact aluminium cylindrical body" },
             { label: "Sizes", value: "×4", desc: "15 · 30 · 45 · 60 cm" },
+            { label: "Protection", value: "IP50", desc: "Standard · IP64 option available" },
+            { label: "Optics", value: "Filter", desc: "Clear diffuser · Polarized option" },
+            { label: "FOV", value: "8 opts", desc: "Without · 6° · 15° · 25° · 45° · 60°(UV) · 70° · 10×50°" },
           ].map((spec) => (
             <div
               key={spec.label}
@@ -590,371 +554,358 @@ export default function Home() {
                 background: "rgba(64,75,113,0.08)",
                 border: "1px solid rgba(90,106,158,0.15)",
                 borderRadius: "12px",
-                transition: "background 0.2s, border-color 0.2s",
                 cursor: "default",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background =
-                  "rgba(64,75,113,0.18)";
-                (e.currentTarget as HTMLElement).style.borderColor =
-                  "rgba(126,179,255,0.3)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background =
-                  "rgba(64,75,113,0.08)";
-                (e.currentTarget as HTMLElement).style.borderColor =
-                  "rgba(90,106,158,0.15)";
-              }}
             >
-              <div
-                style={{
-                  fontSize: "10px",
-                  letterSpacing: "0.3em",
-                  color: "#5a6a9e",
-                  textTransform: "uppercase",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  marginBottom: "12px",
-                }}
-              >
+              <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
                 {spec.label}
               </div>
-              <div
-                style={{
-                  fontSize: "clamp(24px,3vw,36px)",
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  color: "#fff",
-                  letterSpacing: "0.02em",
-                  marginBottom: "8px",
-                }}
-              >
+              <div style={{ fontSize: "clamp(24px,3vw,36px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", letterSpacing: "0.02em", marginBottom: "8px" }}>
                 {spec.value}
               </div>
-              <div style={{ fontSize: "13px", color: "#8892b0" }}>
-                {spec.desc}
-              </div>
+              <div style={{ fontSize: "13px", color: "#8892b0", whiteSpace: "pre-line" }}>{spec.desc}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── LED WAVELENGTHS ── */}
-      <section
-        style={{
-          padding: "0 24px 100px",
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
+      <section style={{ padding: "0 24px 100px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div
-            style={{
-              fontSize: "10px",
-              letterSpacing: "0.4em",
-              color: "#7eb3ff",
-              textTransform: "uppercase",
-              fontFamily: "'JetBrains Mono', monospace",
-              marginBottom: "16px",
-            }}
-          >
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Light Sources
           </div>
-          <h2
-            style={{
-              fontSize: "clamp(24px,4vw,48px)",
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 700,
-              margin: "0 0 12px",
-            }}
-          >
+          <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: "0 0 12px" }}>
             Six Wavelengths
           </h2>
           <p style={{ color: "#8892b0", fontSize: "14px", maxWidth: "480px", margin: "0 auto" }}>
-            High-output LEDs with a 50,000h lifetime — six wavelengths available to match any machine vision application.
+            High-output LEDs with a 50,000h lifetime — click a wavelength to add it to your configuration.
           </p>
         </div>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-            gap: "2px",
-          }}
-        >
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "2px" }}>
           {[
-            { name: "White", nm: "4000K std", color: "#f5f0e8", glow: "rgba(245,240,232,0.15)", desc: "Standard machine vision · 2700K & 6500K available" },
-            { name: "Red", nm: "625 nm", color: "#ef4444", glow: "rgba(239,68,68,0.15)", desc: "High contrast on dark surfaces · barcode reading" },
-            { name: "Green", nm: "530 nm", color: "#4ade80", glow: "rgba(74,222,128,0.15)", desc: "Colour contrast · surface detail" },
-            { name: "Blue", nm: "480 nm", color: "#60a5fa", glow: "rgba(96,165,250,0.15)", desc: "High contrast · defect enhancement" },
-            { name: "Infrared", nm: "850 nm", color: "#ff6b35", glow: "rgba(255,107,53,0.15)", desc: "Through-barrier · covert imaging" },
-            { name: "UV", nm: "365 nm", color: "#a78bfa", glow: "rgba(167,139,250,0.15)", desc: "Fluorescence · defect detection" },
-          ].map((led) => (
-            <div
-              key={led.name}
-              style={{
-                padding: "28px 20px",
-                background: led.glow,
-                border: `1px solid ${led.color}22`,
-                borderRadius: "12px",
-                transition: "background 0.2s, border-color 0.2s",
-                cursor: "default",
-                textAlign: "center",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = led.glow.replace("0.15", "0.28");
-                (e.currentTarget as HTMLElement).style.borderColor = `${led.color}55`;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = led.glow;
-                (e.currentTarget as HTMLElement).style.borderColor = `${led.color}22`;
-              }}
-            >
+            { name: "White",    nm: "4000K std", configValue: "white-4000k", color: "#f5f0e8", glow: "rgba(245,240,232,0.15)", desc: "Standard machine vision · 2700K & 6500K available" },
+            { name: "Red",      nm: "625 nm",    configValue: "red-625",     color: "#ef4444", glow: "rgba(239,68,68,0.15)",   desc: "High contrast on dark surfaces · barcode reading" },
+            { name: "Green",    nm: "530 nm",    configValue: "green-530",   color: "#4ade80", glow: "rgba(74,222,128,0.15)",  desc: "Colour contrast · surface detail" },
+            { name: "Blue",     nm: "480 nm",    configValue: "blue-480",    color: "#60a5fa", glow: "rgba(96,165,250,0.15)",  desc: "High contrast · defect enhancement" },
+            { name: "Infrared", nm: "850 nm",    configValue: "ir-850",      color: "#ff6b35", glow: "rgba(255,107,53,0.15)",  desc: "Through-barrier · covert imaging" },
+            { name: "UV",       nm: "365 nm",    configValue: "uv-365",      color: "#a78bfa", glow: "rgba(167,139,250,0.15)", desc: "Fluorescence · defect detection" },
+          ].map((led) => {
+            const isSelected = config.color === led.configValue;
+            return (
               <div
+                key={led.name}
+                onClick={() => handleConfigChange("color", led.configValue)}
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
-                  background: led.color,
-                  margin: "0 auto 16px",
-                  boxShadow: `0 0 20px ${led.color}66`,
+                  padding: "28px 20px",
+                  background: isSelected ? led.glow.replace("0.15", "0.35") : led.glow,
+                  border: `1px solid ${isSelected ? led.color + "99" : led.color + "22"}`,
+                  borderRadius: "12px",
+                  transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  boxShadow: isSelected ? `0 0 0 2px ${led.color}55` : "none",
                 }}
-              />
-              <div
-                style={{
-                  fontSize: "clamp(18px,2.5vw,26px)",
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  color: "#fff",
-                  marginBottom: "4px",
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = led.glow.replace("0.15", "0.45");
+                  (e.currentTarget as HTMLElement).style.borderColor = `${led.color}88`;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = isSelected ? led.glow.replace("0.15", "0.35") : led.glow;
+                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? `${led.color}99` : `${led.color}22`;
                 }}
               >
-                {led.name}
+                <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: led.color, margin: "0 auto 16px", boxShadow: `0 0 20px ${led.color}66` }} />
+                <div style={{ fontSize: "clamp(18px,2.5vw,26px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{led.name}</div>
+                <div style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: led.color, letterSpacing: "0.15em", marginBottom: "10px" }}>{led.nm}</div>
+                <div style={{ fontSize: "12px", color: "#8892b0", lineHeight: 1.4 }}>{led.desc}</div>
+                {isSelected && (
+                  <div style={{ marginTop: "12px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: led.color, textTransform: "uppercase" }}>
+                    ✓ Selected
+                  </div>
+                )}
               </div>
-              <div
-                style={{
-                  fontSize: "11px",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: led.color,
-                  letterSpacing: "0.15em",
-                  marginBottom: "10px",
-                }}
-              >
-                {led.nm}
-              </div>
-              <div style={{ fontSize: "12px", color: "#8892b0", lineHeight: 1.4 }}>
-                {led.desc}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {/* ── OPTICAL OPTIONS ── */}
-      <section
-        style={{
-          padding: "0 24px 100px",
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
+      <section style={{ padding: "0 24px 100px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div
-            style={{
-              fontSize: "10px",
-              letterSpacing: "0.4em",
-              color: "#7eb3ff",
-              textTransform: "uppercase",
-              fontFamily: "'JetBrains Mono', monospace",
-              marginBottom: "16px",
-            }}
-          >
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Front Optics
           </div>
-          <h2
-            style={{
-              fontSize: "clamp(24px,4vw,48px)",
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 700,
-              margin: 0,
-            }}
-          >
+          <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0 }}>
             Diffuser or Polarized Filter
           </h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))", gap: "2px" }}>
           {[
-            {
-              name: "Transparent Diffuser",
-              icon: "◎",
-              desc: "Homogenises the beam for even, shadow-free illumination across the full LED array. Ideal for surface inspection and texture analysis.",
-              tags: ["Even field", "Reduced hot-spots", "Standard setup"],
-            },
-            {
-              name: "Polarized Filter",
-              icon: "⊗",
-              desc: "Eliminates specular reflections from shiny or metallic surfaces. Combine with a cross-polarizer on the camera for glare-free imaging.",
-              tags: ["Anti-glare", "Metallic surfaces", "Cross-pol compatible"],
-            },
-          ].map((opt) => (
-            <div
-              key={opt.name}
-              style={{
-                padding: "36px 32px",
-                background: "rgba(64,75,113,0.08)",
-                border: "1px solid rgba(90,106,158,0.15)",
-                borderRadius: "12px",
-                transition: "background 0.2s, border-color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.18)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(126,179,255,0.3)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.08)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(90,106,158,0.15)";
-              }}
-            >
-              <div style={{ fontSize: "28px", marginBottom: "16px", color: "#7eb3ff" }}>{opt.icon}</div>
+            { name: "Transparent Diffuser", configValue: "none",      icon: "◎", desc: "Homogenises the beam for even, shadow-free illumination across the full LED array. Ideal for surface inspection and texture analysis.", tags: ["Even field", "Reduced hot-spots", "Standard setup"] },
+            { name: "Polarized Filter",     configValue: "polarized", icon: "⊗", desc: "Eliminates specular reflections from shiny or metallic surfaces. Combine with a cross-polarizer on the camera for glare-free imaging.", tags: ["Anti-glare", "Metallic surfaces", "Cross-pol compatible"] },
+          ].map((opt) => {
+            const isSelected = config.filter === opt.configValue;
+            return (
               <div
+                key={opt.name}
+                onClick={() => handleConfigChange("filter", opt.configValue)}
                 style={{
-                  fontSize: "clamp(20px,2.5vw,28px)",
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  marginBottom: "12px",
-                  letterSpacing: "0.02em",
+                  padding: "36px 32px",
+                  background: isSelected ? "rgba(64,75,113,0.22)" : "rgba(64,75,113,0.08)",
+                  border: `1px solid ${isSelected ? "rgba(126,179,255,0.5)" : "rgba(90,106,158,0.15)"}`,
+                  borderRadius: "12px",
+                  transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+                  cursor: "pointer",
+                  boxShadow: isSelected ? "0 0 0 2px rgba(126,179,255,0.25)" : "none",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.28)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(126,179,255,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(64,75,113,0.22)" : "rgba(64,75,113,0.08)";
+                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(126,179,255,0.5)" : "rgba(90,106,158,0.15)";
                 }}
               >
-                {opt.name}
+                <div style={{ fontSize: "28px", marginBottom: "16px", color: "#7eb3ff" }}>{opt.icon}</div>
+                <div style={{ fontSize: "clamp(20px,2.5vw,28px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, marginBottom: "12px", letterSpacing: "0.02em" }}>{opt.name}</div>
+                <p style={{ color: "#8892b0", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>{opt.desc}</p>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  {opt.tags.map((t) => (
+                    <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.15em", color: "#7eb3ff", border: "1px solid rgba(126,179,255,0.2)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
+                  ))}
+                </div>
+                {isSelected && (
+                  <div style={{ marginTop: "16px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#7eb3ff", textTransform: "uppercase" }}>
+                    ✓ Selected
+                  </div>
+                )}
               </div>
-              <p style={{ color: "#8892b0", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>
-                {opt.desc}
-              </p>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                {opt.tags.map((t) => (
-                  <span
-                    key={t}
-                    style={{
-                      fontSize: "10px",
-                      fontFamily: "'JetBrains Mono', monospace",
-                      letterSpacing: "0.15em",
-                      color: "#7eb3ff",
-                      border: "1px solid rgba(126,179,255,0.2)",
-                      padding: "4px 10px",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {/* ── SIZES ── */}
-      <section
-        style={{
-          padding: "80px 24px 120px",
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
+      <section style={{ padding: "80px 24px 120px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <div
-            style={{
-              fontSize: "10px",
-              letterSpacing: "0.4em",
-              color: "#7eb3ff",
-              textTransform: "uppercase",
-              fontFamily: "'JetBrains Mono', monospace",
-              marginBottom: "16px",
-            }}
-          >
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Available Configurations
           </div>
-          <h2
-            style={{
-              fontSize: "clamp(24px,4vw,48px)",
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 700,
-              margin: 0,
-            }}
-          >
+          <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0 }}>
             Four Sizes. One Standard.
           </h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
           {[
-            { size: "15 cm", code: "C-Bar 150", note: "Compact — tight spaces & close-range inspection", w: 72 },
-            { size: "30 cm", code: "C-Bar 300", note: "Standard — versatile all-purpose configuration", w: 144 },
-            { size: "45 cm", code: "C-Bar 450", note: "Extended — wider field-of-view applications", w: 216 },
-            { size: "60 cm", code: "C-Bar 600", note: "Full span — large surface illumination", w: 288 },
-          ].map((item) => (
+            { size: "15 cm", code: "C-Bar 150", configValue: "150mm", note: "Compact — tight spaces & close-range inspection", w: 72 },
+            { size: "30 cm", code: "C-Bar 300", configValue: "300mm", note: "Standard — versatile all-purpose configuration", w: 144 },
+            { size: "45 cm", code: "C-Bar 450", configValue: "450mm", note: "Extended — wider field-of-view applications", w: 216 },
+            { size: "60 cm", code: "C-Bar 600", configValue: "600mm", note: "Full span — large surface illumination", w: 288 },
+          ].map((item) => {
+            const isSelected = config.size === item.configValue;
+            return (
+              <div
+                key={item.size}
+                onClick={() => handleConfigChange("size", item.configValue)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "20px 24px",
+                  background: isSelected ? "rgba(64,75,113,0.2)" : "rgba(64,75,113,0.06)",
+                  border: `1px solid ${isSelected ? "rgba(126,179,255,0.45)" : "rgba(90,106,158,0.12)"}`,
+                  borderRadius: "12px",
+                  gap: "20px",
+                  transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+                  cursor: "pointer",
+                  flexWrap: "wrap",
+                  boxShadow: isSelected ? "0 0 0 2px rgba(126,179,255,0.2)" : "none",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.25)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(126,179,255,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(64,75,113,0.2)" : "rgba(64,75,113,0.06)";
+                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(126,179,255,0.45)" : "rgba(90,106,158,0.12)";
+                }}
+              >
+                <div style={{ flexShrink: 0, minWidth: "72px" }}>
+                  <div style={{ height: "3px", width: `${item.w * 0.5}px`, maxWidth: "100%", background: "linear-gradient(90deg, #404B71, #7eb3ff)", borderRadius: "1.5px" }} />
+                </div>
+                <div style={{ flex: 1, minWidth: "160px" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: "#7eb3ff", letterSpacing: "0.15em", marginBottom: "4px" }}>{item.code}</div>
+                  <div style={{ color: "#8892b0", fontSize: "13px" }}>{item.note}</div>
+                </div>
+                <div style={{ fontSize: "clamp(20px,3vw,34px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.12)", flexShrink: 0 }}>{item.size}</div>
+                {isSelected && (
+                  <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#7eb3ff", textTransform: "uppercase", flexShrink: 0 }}>✓</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── STICKY SCROLL SECTION ── */}
+      <div
+        ref={scrollRef}
+        style={{ height: `${STAGES.length * 25}vh`, position: "relative" }}
+      >
+
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            height: "100vh",
+            display: "flex",
+            flexDirection: "row",
+            overflow: "hidden",
+          }}
+        >
+          {/* BG grid */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: `
+                linear-gradient(rgba(90,106,158,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(90,106,158,0.05) 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
+            }}
+          />
+
+          {/* LEFT column — product viewer */}
+          <div
+            style={{
+              flex: "0 0 58%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "clamp(60px,8vh,80px) 16px clamp(40px,6vh,60px)",
+              position: "relative",
+            }}
+          >
+            {/* Stage title */}
             <div
-              key={item.size}
+              style={{
+                textAlign: "center",
+                marginBottom: "16px",
+                transition: "opacity 0.4s, transform 0.4s",
+                opacity: annotationVisible ? 1 : 0,
+                transform: annotationVisible ? "translateY(0)" : "translateY(-10px)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "10px",
+                  letterSpacing: "0.4em",
+                  color: "#7eb3ff",
+                  textTransform: "uppercase",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  marginBottom: "8px",
+                }}
+              >
+                {String(stage).padStart(2, "0")} /{" "}
+                {String(STAGES.length - 1).padStart(2, "0")}
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(20px,3.5vw,40px)",
+                  fontFamily: "'Barlow Condensed', sans-serif",
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                  margin: 0,
+                  color: "#fff",
+                }}
+              >
+                {current.title}
+              </h2>
+              <p
+                style={{
+                  fontSize: "clamp(12px,1.4vw,14px)",
+                  color: "#8892b0",
+                  marginTop: "6px",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {current.subtitle}
+              </p>
+            </div>
+
+            {/* Product + annotation wrapper */}
+            <ProductViewer
+              frameIndex={current.frame}
+              annotations={current.annotations}
+              annotationVisible={annotationVisible}
+              showLightEffect={stage === 5}
+            />
+
+            {/* Progress bar */}
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                padding: "20px 24px",
-                background: "rgba(64,75,113,0.06)",
-                border: "1px solid rgba(90,106,158,0.12)",
-                borderRadius: "12px",
-                gap: "20px",
-                transition: "background 0.2s",
-                flexWrap: "wrap",
+                gap: "12px",
+                marginTop: "16px",
               }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLElement).style.background =
-                  "rgba(64,75,113,0.15)")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLElement).style.background =
-                  "rgba(64,75,113,0.06)")
-              }
             >
-              <div style={{ flexShrink: 0, minWidth: "72px" }}>
+              <div
+                style={{
+                  width: "clamp(100px,18vw,160px)",
+                  height: "2px",
+                  background: "rgba(90,106,158,0.2)",
+                  borderRadius: "1px",
+                  overflow: "hidden",
+                }}
+              >
                 <div
                   style={{
-                    height: "3px",
-                    width: `${item.w * 0.5}px`,
-                    maxWidth: "100%",
+                    height: "100%",
+                    width: `${progressPercent * 100}%`,
                     background: "linear-gradient(90deg, #404B71, #7eb3ff)",
-                    borderRadius: "1.5px",
+                    borderRadius: "1px",
+                    transition: "width 0.4s ease",
                   }}
                 />
               </div>
-              <div style={{ flex: 1, minWidth: "160px" }}>
-                <div
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "12px",
-                    color: "#7eb3ff",
-                    letterSpacing: "0.15em",
-                    marginBottom: "4px",
-                  }}
-                >
-                  {item.code}
-                </div>
-                <div style={{ color: "#8892b0", fontSize: "13px" }}>
-                  {item.note}
-                </div>
-              </div>
-              <div
+              <span
                 style={{
-                  fontSize: "clamp(20px,3vw,34px)",
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  color: "rgba(255,255,255,0.12)",
-                  flexShrink: 0,
+                  fontSize: "10px",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: "#5a6a9e",
+                  letterSpacing: "0.2em",
                 }}
               >
-                {item.size}
-              </div>
+                {Math.round(progressPercent * 100)}%
+              </span>
             </div>
-          ))}
+          </div>
+
+          {/* RIGHT column — configurator */}
+          <div
+            style={{
+              flex: "0 0 42%",
+              borderLeft: "1px solid rgba(90,106,158,0.15)",
+              overflowY: "auto",
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <ConfigPanel
+              stage={stage}
+              config={config}
+              onChange={handleConfigChange}
+              onSubmit={handleSubmit}
+            />
+          </div>
         </div>
-      </section>
+      </div>
 
       {/* ── CTA ── */}
       <section
@@ -1784,6 +1735,145 @@ function AnnotationDot({
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+// ─── Configurator Panel ───────────────────────────────────────────────────────
+function ConfigPanel({
+  stage,
+  config,
+  onChange,
+  onSubmit,
+}: {
+  stage: number;
+  config: Config;
+  onChange: (key: keyof Config, value: string) => void;
+  onSubmit: () => void;
+}) {
+  const highlighted = CONFIG_SECTIONS.filter(s => s.stageHighlight.includes(stage)).map(s => s.id);
+  const ready = !!config.model && !!config.color;
+
+  return (
+    <div
+      style={{
+        padding: "clamp(20px,3vh,32px) clamp(20px,2.5vw,36px)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "14px",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Header */}
+      <div style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(90,106,158,0.15)" }}>
+        <div style={{ fontSize: "12px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px" }}>
+          Configure
+        </div>
+        <div style={{ fontSize: "clamp(22px,2.4vw,30px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", letterSpacing: "0.04em" }}>
+          C-Bar
+        </div>
+      </div>
+
+      {/* Option sections */}
+      {CONFIG_SECTIONS.map(section => {
+        const isHighlighted = highlighted.includes(section.id);
+        return (
+          <div
+            key={section.id}
+            style={{
+              padding: "12px 14px",
+              borderRadius: "8px",
+              border: `1px solid ${isHighlighted ? "rgba(126,179,255,0.4)" : "rgba(90,106,158,0.12)"}`,
+              background: isHighlighted ? "rgba(64,75,113,0.18)" : "transparent",
+              transition: "all 0.4s ease",
+            }}
+          >
+            <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: isHighlighted ? "#7eb3ff" : "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px", transition: "color 0.4s" }}>
+              {section.label}
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+              {section.options.map(opt => {
+                const sel = config[section.id] === opt.value;
+                return (
+                  <div key={opt.value} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                    <button
+                      onClick={() => onChange(section.id, opt.value)}
+                      style={{
+                        padding: "6px 14px",
+                        fontSize: "13px",
+                        fontFamily: "'JetBrains Mono', monospace",
+                        border: `1px solid ${sel ? "#7eb3ff" : "rgba(90,106,158,0.3)"}`,
+                        borderRadius: "4px",
+                        background: sel ? "rgba(126,179,255,0.15)" : "transparent",
+                        color: sel ? "#7eb3ff" : "#8892b0",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                    {opt.note && (
+                      <div style={{ fontSize: "11px", color: "#5a6a9e", fontFamily: "'JetBrains Mono', monospace", paddingLeft: "2px", maxWidth: "180px", lineHeight: 1.3 }}>
+                        {opt.note}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Quantity */}
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
+          Quantity
+        </div>
+        <input
+          type="number"
+          min="1"
+          value={config.quantity}
+          onChange={e => onChange("quantity", e.target.value)}
+          style={{ width: "80px", padding: "6px 10px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "15px", fontFamily: "'JetBrains Mono', monospace" }}
+        />
+      </div>
+
+      {/* Notes */}
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
+          Need help? Write your comments below
+        </div>
+        <textarea
+          value={config.notes}
+          onChange={e => onChange("notes", e.target.value)}
+          placeholder="Additional requirements, questions, or special configurations..."
+          rows={2}
+          style={{ width: "100%", padding: "8px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", resize: "vertical", boxSizing: "border-box", outline: "none" }}
+        />
+      </div>
+
+      {/* Submit */}
+      <button
+        onClick={ready ? onSubmit : undefined}
+        style={{
+          marginTop: "4px",
+          padding: "14px 20px",
+          background: ready ? "#404B71" : "rgba(64,75,113,0.2)",
+          border: `1px solid ${ready ? "rgba(126,179,255,0.3)" : "rgba(90,106,158,0.15)"}`,
+          borderRadius: "8px",
+          color: ready ? "#fff" : "#5a6a9e",
+          fontSize: "14px",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          fontFamily: "'Barlow Condensed', sans-serif",
+          fontWeight: 600,
+          cursor: ready ? "pointer" : "default",
+          transition: "all 0.2s",
+        }}
+      >
+        {ready ? "Request a Quote ↗" : "Select a model & light source first"}
+      </button>
     </div>
   );
 }
