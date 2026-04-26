@@ -72,7 +72,7 @@ const STAGES: {
       {
         id: 7,
         label: "Multiple Colors",
-        sublabel: "White · Red · Green · Blue · IR · UV",
+        sublabel: "White · Red · Green\nBlue · IR · UV",
         dotX: 50,
         dotY: 50,
         left: true,
@@ -131,7 +131,7 @@ const STAGES: {
     subtitle: "IP50 standard · IP64 option available for harsher environments",
   },
   {
-    // Pic 05 — cbar-03-nb (connector face, vertical line, label centered above)
+    // Pic 05 — cbar-03-nb (connector face, angled line to the right)
     frame: 3,
     annotations: [
       {
@@ -140,8 +140,8 @@ const STAGES: {
         sublabel: "4-pin industrial · quick & secure",
         dotX: 50,
         dotY: 52,
-        vertical: true,
-        verticalLineLength: 240,
+        angled: true,
+        angledLineLength: [140, 44],
       },
     ],
     title: "Plug & Go",
@@ -946,7 +946,7 @@ export default function Home() {
             Ready to Illuminate?
           </h2>
           <p style={{ color: "#8892b0", fontSize: "16px", marginBottom: "40px" }}>
-            Contact Levan to configure the right C-Bar for your application.
+            Contact Levan for more specific needs or applications.
           </p>
           <a
             href="https://www.levancorp.com/contact-us"
@@ -1438,7 +1438,7 @@ function AnnotationDot({
             height="1"
           >
             <defs>
-              <linearGradient id={`annotLine${annotation.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient id={`annotLine${annotation.id}`} x1="0" y1="0" x2="0" y2="110" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#7eb3ff" />
                 <stop offset="100%" stopColor="rgba(126,179,255,0.35)" />
               </linearGradient>
@@ -1598,7 +1598,7 @@ function AnnotationDot({
                 color: "#8892b0",
                 fontFamily: "'JetBrains Mono', monospace",
                 lineHeight: 1.4,
-                whiteSpace: "nowrap",
+                whiteSpace: "pre-line",
               }}
             >
               {annotation.sublabel}
