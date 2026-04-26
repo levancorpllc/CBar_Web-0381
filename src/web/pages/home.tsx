@@ -9,15 +9,16 @@ import { useEffect, useRef, useState } from "react";
 // 5 → cbar-05-nb (LED front vertical — Cree LEDs)
 // 6 → cbar-05-rotated-nb (horizontal — Ø25mm)
 // 7 → cbar-01-nb (diagonal — 4 Sizes)
+const BASE = import.meta.env.BASE_URL;
 const FRAMES = [
-  "/cbar-07-nb.png",
-  "/cbar-07-rotated-nb.png",
-  "/cbar-06-nb.png",
-  "/cbar-03-nb.png",
-  "/cbar-new04-nb.png",
-  "/cbar-05-nb.png",
-  "/cbar-05-rotated-nb.png",
-  "/cbar-01-nb.png",
+  `${BASE}cbar-07-nb.png`,
+  `${BASE}cbar-07-rotated-nb.png`,
+  `${BASE}cbar-06-nb.png`,
+  `${BASE}cbar-03-nb.png`,
+  `${BASE}cbar-new04-nb.png`,
+  `${BASE}cbar-05-nb.png`,
+  `${BASE}cbar-05-rotated-nb.png`,
+  `${BASE}cbar-01-nb.png`,
 ];
 
 interface Annotation {
