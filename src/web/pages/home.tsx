@@ -257,11 +257,11 @@ export default function Home() {
         >
           <div
             style={{
-              fontSize: "11px",
+              fontSize: "15px",
               letterSpacing: "0.35em",
               color: "#7eb3ff",
               textTransform: "uppercase",
-              marginBottom: "20px",
+              marginBottom: "24px",
               fontFamily: "'JetBrains Mono', monospace",
             }}
           >
@@ -269,12 +269,12 @@ export default function Home() {
           </div>
           <h1
             style={{
-              fontSize: "clamp(72px,12vw,140px)",
+              fontSize: "clamp(100px,16vw,200px)",
               fontFamily: "'Barlow Condensed', sans-serif",
               fontWeight: 700,
               letterSpacing: "-0.02em",
               lineHeight: 0.9,
-              margin: "0 0 24px",
+              margin: "0 0 32px",
               background: "linear-gradient(135deg,#ffffff 30%,#7eb3ff 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -284,33 +284,33 @@ export default function Home() {
           </h1>
           <p
             style={{
-              fontSize: "clamp(13px,2vw,18px)",
+              fontSize: "clamp(16px,2.5vw,26px)",
               color: "#8892b0",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
-              marginBottom: "16px",
+              marginBottom: "20px",
             }}
           >
             Industrial Vision Lighting
           </p>
           <p
             style={{
-              fontSize: "clamp(12px,1.4vw,14px)",
+              fontSize: "clamp(14px,1.8vw,18px)",
               color: "#5a6a9e",
               letterSpacing: "0.04em",
-              marginBottom: "48px",
+              marginBottom: "56px",
             }}
           >
             Ø26 mm · Direct Mode · Diffuser & Polarized filter options
           </p>
           <div
-            style={{ display: "flex", gap: "32px", justifyContent: "center", flexWrap: "wrap" }}
+            style={{ display: "flex", gap: "40px", justifyContent: "center", flexWrap: "wrap" }}
           >
             {["Ø26mm", "IP50", "24V", "LEDs", "Strobe"].map((tag) => (
               <span
                 key={tag}
                 style={{
-                  fontSize: "12px",
+                  fontSize: "15px",
                   letterSpacing: "0.2em",
                   color: "#5a6a9e",
                   borderBottom: "1px solid rgba(90,106,158,0.4)",
