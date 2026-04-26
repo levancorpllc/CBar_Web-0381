@@ -4,6 +4,7 @@ import tailwind from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
+	base: "/CBar_Web-0381/",
 	plugins: [react(), tailwind()],
 	resolve: {
 		alias: {
