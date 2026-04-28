@@ -295,6 +295,7 @@ export default function Home() {
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleConfigChange = (key: keyof Config, value: string) =>
     setConfig(prev => ({ ...prev, [key]: value }));
@@ -337,6 +338,17 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setAnnotationVisible(true);
+      return;
+    }
     const handleScroll = () => {
       if (!scrollRef.current) return;
       const rect = scrollRef.current.getBoundingClientRect();
@@ -360,7 +372,7 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     setTimeout(() => setAnnotationVisible(true), 700);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [stage]);
+  }, [stage, isMobile]);
 
   const current = STAGES[stage];
   const progressPercent = stage / (STAGES.length - 1);
@@ -461,7 +473,7 @@ export default function Home() {
             With Diffuser & Polarized filter options
           </p>
           <div
-            style={{ display: "flex", gap: "40px", justifyContent: "center", flexWrap: "wrap" }}
+            style={{ display: "flex", gap: isMobile ? "16px" : "40px", justifyContent: "center", flexWrap: "wrap" }}
           >
             {["Ø26mm", "IP50/64", "24V", "LEDs", "Strobe"].map((tag) => (
               <span
@@ -838,168 +850,248 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── STICKY SCROLL SECTION ── */}
-      <div
-        ref={scrollRef}
-        style={{ height: `${STAGES.length * 25}vh`, position: "relative" }}
-      >
+      {/* ── PRODUCT STAGES (MOBILE: cards / DESKTOP: sticky scroll) ── */}
+      {isMobile ? (
+        /* ── MOBILE: Vertical stage cards + configurator ── */
+        <div style={{ padding: "60px 16px" }}>
+          <div style={{ textAlign: "center", marginBottom: "40px" }}>
+            <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
+              Product Details
+            </div>
+            <h2 style={{ fontSize: "clamp(26px,8vw,40px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0, letterSpacing: "0.02em" }}>
+              All Features
+            </h2>
+          </div>
 
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "60px" }}>
+            {STAGES.map((s, i) => (
+              <div
+                key={i}
+                style={{
+                  background: "rgba(0,36,88,0.04)",
+                  border: "1px solid rgba(0,36,88,0.1)",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ height: "260px", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", background: "rgba(0,36,88,0.02)" }}>
+                  <img
+                    src={FRAMES[s.frame]}
+                    alt={s.title}
+                    style={{ height: "100%", maxWidth: "100%", objectFit: "contain", filter: "drop-shadow(0 4px 24px rgba(0,36,88,0.1))" }}
+                  />
+                </div>
+                <div style={{ padding: "20px 20px 24px", borderTop: "1px solid rgba(0,36,88,0.08)" }}>
+                  <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.3em", color: "#7a90b0", marginBottom: "8px", textTransform: "uppercase" }}>
+                    {String(i).padStart(2, "0")} / {String(STAGES.length - 1).padStart(2, "0")}
+                  </div>
+                  <h3 style={{ fontSize: "clamp(20px,6vw,28px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#002458", margin: "0 0 6px", letterSpacing: "0.02em" }}>
+                    {s.title}
+                  </h3>
+                  <p style={{ color: "#4a6080", fontSize: "14px", lineHeight: 1.6, margin: "0 0 12px" }}>
+                    {s.subtitle}
+                  </p>
+                  {s.annotations.map(a => (
+                    <div key={a.id} style={{ marginTop: "8px", padding: "10px 12px", background: "rgba(0,36,88,0.05)", borderRadius: "8px", border: "1px solid rgba(0,36,88,0.08)" }}>
+                      <div style={{ fontSize: "12px", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#002458", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                        {a.label}
+                      </div>
+                      <div style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: "#4a6080", marginTop: "3px", lineHeight: 1.5, whiteSpace: "pre-line" }}>
+                        {a.sublabel}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+            <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
+              Build Your C-Bar
+            </div>
+            <h2 style={{ fontSize: "clamp(26px,8vw,40px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0, letterSpacing: "0.02em" }}>
+              Configure & Quote
+            </h2>
+          </div>
+          <div style={{ background: "rgba(0,36,88,0.04)", border: "1px solid rgba(0,36,88,0.1)", borderRadius: "16px", overflow: "hidden" }}>
+            <ConfigPanel
+              stage={0}
+              config={config}
+              onChange={handleConfigChange}
+              onSubmit={handleSubmit}
+              contactName={contactName}
+              contactEmail={contactEmail}
+              formStatus={formStatus}
+              onNameChange={setContactName}
+              onEmailChange={setContactEmail}
+            />
+          </div>
+        </div>
+      ) : (
+        /* ── DESKTOP: Sticky scroll ── */
         <div
-          style={{
-            position: "sticky",
-            top: 0,
-            height: "100vh",
-            display: "flex",
-            flexDirection: "row",
-            overflow: "hidden",
-          }}
+          ref={scrollRef}
+          style={{ height: `${STAGES.length * 25}vh`, position: "relative" }}
         >
-          {/* BG grid */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage: `
-                linear-gradient(rgba(0,36,88,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,36,88,0.04) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
 
-          {/* LEFT column — product viewer */}
           <div
             style={{
-              flex: "0 0 58%",
+              position: "sticky",
+              top: 0,
+              height: "100vh",
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "clamp(60px,8vh,80px) 16px clamp(40px,6vh,60px)",
-              position: "relative",
+              flexDirection: "row",
+              overflow: "hidden",
             }}
           >
-            {/* Stage title */}
+            {/* BG grid */}
             <div
               style={{
-                textAlign: "center",
-                marginBottom: "16px",
-                transition: "opacity 0.4s, transform 0.4s",
-                opacity: annotationVisible ? 1 : 0,
-                transform: annotationVisible ? "translateY(0)" : "translateY(-10px)",
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `
+                  linear-gradient(rgba(0,36,88,0.04) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(0,36,88,0.04) 1px, transparent 1px)`,
+                backgroundSize: "60px 60px",
               }}
-            >
-              <div
-                style={{
-                  fontSize: "10px",
-                  letterSpacing: "0.4em",
-                  color: "#002458",
-                  textTransform: "uppercase",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  marginBottom: "8px",
-                }}
-              >
-                {String(stage).padStart(2, "0")} /{" "}
-                {String(STAGES.length - 1).padStart(2, "0")}
-              </div>
-              <h2
-                style={{
-                  fontSize: "clamp(20px,3.5vw,40px)",
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  margin: 0,
-                  color: "#002458",
-                }}
-              >
-                {current.title}
-              </h2>
-              <p
-                style={{
-                  fontSize: "clamp(12px,1.4vw,14px)",
-                  color: "#4a6080",
-                  marginTop: "6px",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                {current.subtitle}
-              </p>
-            </div>
-
-            {/* Product + annotation wrapper */}
-            <ProductViewer
-              frameIndex={current.frame}
-              annotations={current.annotations}
-              annotationVisible={annotationVisible}
-              showLightEffect={stage === 1}
             />
 
-            {/* Progress bar */}
+            {/* LEFT column — product viewer */}
             <div
               style={{
+                flex: "0 0 58%",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                gap: "12px",
-                marginTop: "16px",
+                justifyContent: "center",
+                padding: "clamp(60px,8vh,80px) 16px clamp(40px,6vh,60px)",
+                position: "relative",
               }}
             >
+              {/* Stage title */}
               <div
                 style={{
-                  width: "clamp(100px,18vw,160px)",
-                  height: "2px",
-                  background: "rgba(0,36,88,0.12)",
-                  borderRadius: "1px",
-                  overflow: "hidden",
+                  textAlign: "center",
+                  marginBottom: "16px",
+                  transition: "opacity 0.4s, transform 0.4s",
+                  opacity: annotationVisible ? 1 : 0,
+                  transform: annotationVisible ? "translateY(0)" : "translateY(-10px)",
                 }}
               >
                 <div
                   style={{
-                    height: "100%",
-                    width: `${progressPercent * 100}%`,
-                    background: "linear-gradient(90deg, #002458, #4a8fd4)",
-                    borderRadius: "1px",
-                    transition: "width 0.4s ease",
+                    fontSize: "10px",
+                    letterSpacing: "0.4em",
+                    color: "#002458",
+                    textTransform: "uppercase",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    marginBottom: "8px",
                   }}
-                />
+                >
+                  {String(stage).padStart(2, "0")} /{" "}
+                  {String(STAGES.length - 1).padStart(2, "0")}
+                </div>
+                <h2
+                  style={{
+                    fontSize: "clamp(20px,3.5vw,40px)",
+                    fontFamily: "'Barlow Condensed', sans-serif",
+                    fontWeight: 700,
+                    letterSpacing: "0.02em",
+                    margin: 0,
+                    color: "#002458",
+                  }}
+                >
+                  {current.title}
+                </h2>
+                <p
+                  style={{
+                    fontSize: "clamp(12px,1.4vw,14px)",
+                    color: "#4a6080",
+                    marginTop: "6px",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {current.subtitle}
+                </p>
               </div>
-              <span
+
+              {/* Product + annotation wrapper */}
+              <ProductViewer
+                frameIndex={current.frame}
+                annotations={current.annotations}
+                annotationVisible={annotationVisible}
+                showLightEffect={stage === 1}
+              />
+
+              {/* Progress bar */}
+              <div
                 style={{
-                  fontSize: "10px",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: "#7a90b0",
-                  letterSpacing: "0.2em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginTop: "16px",
                 }}
               >
-                {Math.round(progressPercent * 100)}%
-              </span>
+                <div
+                  style={{
+                    width: "clamp(100px,18vw,160px)",
+                    height: "2px",
+                    background: "rgba(0,36,88,0.12)",
+                    borderRadius: "1px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${progressPercent * 100}%`,
+                      background: "linear-gradient(90deg, #002458, #4a8fd4)",
+                      borderRadius: "1px",
+                      transition: "width 0.4s ease",
+                    }}
+                  />
+                </div>
+                <span
+                  style={{
+                    fontSize: "10px",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    color: "#7a90b0",
+                    letterSpacing: "0.2em",
+                  }}
+                >
+                  {Math.round(progressPercent * 100)}%
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* RIGHT column — configurator */}
-          <div
-            style={{
-              flex: "0 0 42%",
-              borderLeft: "1px solid rgba(0,36,88,0.1)",
-              overflowY: "auto",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            <div style={{ minHeight: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <ConfigPanel
-                stage={stage}
-                config={config}
-                onChange={handleConfigChange}
-                onSubmit={handleSubmit}
-                contactName={contactName}
-                contactEmail={contactEmail}
-                formStatus={formStatus}
-                onNameChange={setContactName}
-                onEmailChange={setContactEmail}
-              />
+            {/* RIGHT column — configurator */}
+            <div
+              style={{
+                flex: "0 0 42%",
+                borderLeft: "1px solid rgba(0,36,88,0.1)",
+                overflowY: "auto",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              <div style={{ minHeight: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <ConfigPanel
+                  stage={stage}
+                  config={config}
+                  onChange={handleConfigChange}
+                  onSubmit={handleSubmit}
+                  contactName={contactName}
+                  contactEmail={contactEmail}
+                  formStatus={formStatus}
+                  onNameChange={setContactName}
+                  onEmailChange={setContactEmail}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── CTA ── */}
       <section
