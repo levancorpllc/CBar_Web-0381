@@ -369,8 +369,8 @@ export default function Home() {
     <div
       style={{
         fontFamily: "'Barlow', sans-serif",
-        background: "#08091a",
-        color: "#fff",
+        background: "linear-gradient(165deg, #f8faff 0%, #edf1f9 55%, #dde4f0 100%)",
+        color: "#002458",
         minHeight: "100vh",
       }}
     >
@@ -391,8 +391,8 @@ export default function Home() {
             position: "absolute",
             inset: 0,
             backgroundImage: `
-              linear-gradient(rgba(90,106,158,0.08) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(90,106,158,0.08) 1px, transparent 1px)`,
+              linear-gradient(rgba(0,36,88,0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,36,88,0.05) 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
           }}
         />
@@ -405,7 +405,7 @@ export default function Home() {
             width: "600px",
             height: "300px",
             background:
-              "radial-gradient(ellipse, rgba(64,75,113,0.4) 0%, transparent 70%)",
+              "radial-gradient(ellipse, rgba(0,36,88,0.05) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -416,7 +416,7 @@ export default function Home() {
             style={{
               fontSize: "20px",
               letterSpacing: "0.35em",
-              color: "#7eb3ff",
+              color: "#002458",
               textTransform: "uppercase",
               marginBottom: "28px",
               fontFamily: "'JetBrains Mono', monospace",
@@ -432,7 +432,7 @@ export default function Home() {
               letterSpacing: "-0.02em",
               lineHeight: 0.9,
               margin: "0 0 32px",
-              background: "linear-gradient(135deg,#ffffff 30%,#7eb3ff 100%)",
+              background: "linear-gradient(135deg, #002458 20%, #1a5fa8 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -442,7 +442,7 @@ export default function Home() {
           <p
             style={{
               fontSize: "clamp(20px,3.2vw,36px)",
-              color: "#8892b0",
+              color: "#4a6080",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               marginBottom: "20px",
@@ -453,7 +453,7 @@ export default function Home() {
           <p
             style={{
               fontSize: "clamp(16px,2.2vw,24px)",
-              color: "#5a6a9e",
+              color: "#7a90b0",
               letterSpacing: "0.04em",
               marginBottom: "56px",
             }}
@@ -469,8 +469,8 @@ export default function Home() {
                 style={{
                   fontSize: "18px",
                   letterSpacing: "0.2em",
-                  color: "#5a6a9e",
-                  borderBottom: "1px solid rgba(90,106,158,0.4)",
+                  color: "#4a6080",
+                  borderBottom: "1px solid rgba(0,36,88,0.2)",
                   paddingBottom: "4px",
                   fontFamily: "'JetBrains Mono', monospace",
                 }}
@@ -495,7 +495,7 @@ export default function Home() {
             style={{
               fontSize: "10px",
               letterSpacing: "0.3em",
-              color: "#8892b0",
+              color: "#4a6080",
               textTransform: "uppercase",
             }}
           >
@@ -505,7 +505,7 @@ export default function Home() {
             style={{
               width: "1px",
               height: "40px",
-              background: "linear-gradient(to bottom, #7eb3ff, transparent)",
+              background: "linear-gradient(to bottom, #002458, transparent)",
               animation: "pulse 2s ease-in-out infinite",
             }}
           />
@@ -530,7 +530,7 @@ export default function Home() {
             width: "1px",
             height: "80px",
             background:
-              "linear-gradient(to bottom, transparent, rgba(90,106,158,0.5))",
+              "linear-gradient(to bottom, transparent, rgba(0,36,88,0.15))",
           }}
         />
         <div style={{ textAlign: "center", marginBottom: "80px" }}>
@@ -538,7 +538,7 @@ export default function Home() {
             style={{
               fontSize: "10px",
               letterSpacing: "0.4em",
-              color: "#7eb3ff",
+              color: "#002458",
               textTransform: "uppercase",
               fontFamily: "'JetBrains Mono', monospace",
               marginBottom: "16px",
@@ -581,19 +581,19 @@ export default function Home() {
               key={spec.label}
               style={{
                 padding: "28px 24px",
-                background: "rgba(64,75,113,0.08)",
-                border: "1px solid rgba(90,106,158,0.15)",
+                background: "rgba(0,36,88,0.05)",
+                border: "1px solid rgba(0,36,88,0.1)",
                 borderRadius: "12px",
                 cursor: "default",
               }}
             >
-              <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
+              <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
                 {spec.label}
               </div>
-              <div style={{ fontSize: "clamp(24px,3vw,36px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", letterSpacing: "0.02em", marginBottom: "8px" }}>
+              <div style={{ fontSize: "clamp(24px,3vw,36px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#002458", letterSpacing: "0.02em", marginBottom: "8px" }}>
                 {spec.value}
               </div>
-              <div style={{ fontSize: "13px", color: "#8892b0", whiteSpace: "pre-line" }}>{spec.desc}</div>
+              <div style={{ fontSize: "13px", color: "#4a6080", whiteSpace: "pre-line" }}>{spec.desc}</div>
             </div>
           ))}
         </div>
@@ -602,13 +602,13 @@ export default function Home() {
       {/* ── LED WAVELENGTHS ── */}
       <section style={{ padding: "0 24px 100px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Light Sources
           </div>
           <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: "0 0 12px" }}>
             Six Wavelengths
           </h2>
-          <p style={{ color: "#8892b0", fontSize: "14px", maxWidth: "480px", margin: "0 auto" }}>
+          <p style={{ color: "#4a6080", fontSize: "14px", maxWidth: "480px", margin: "0 auto" }}>
             High-output LEDs with a 50,000h lifetime — click a wavelength to add it to your configuration.
           </p>
         </div>
@@ -646,9 +646,9 @@ export default function Home() {
                 }}
               >
                 <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: led.color, margin: "0 auto 16px", boxShadow: `0 0 20px ${led.color}66` }} />
-                <div style={{ fontSize: "clamp(18px,2.5vw,26px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{led.name}</div>
+                <div style={{ fontSize: "clamp(18px,2.5vw,26px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#002458", marginBottom: "4px" }}>{led.name}</div>
                 <div style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: led.color, letterSpacing: "0.15em", marginBottom: "10px" }}>{led.nm}</div>
-                <div style={{ fontSize: "12px", color: "#8892b0", lineHeight: 1.4 }}>{led.desc}</div>
+                <div style={{ fontSize: "12px", color: "#4a6080", lineHeight: 1.4 }}>{led.desc}</div>
                 {isSelected && (
                   <div style={{ marginTop: "12px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: led.color, textTransform: "uppercase" }}>
                     ✓ Selected
@@ -663,7 +663,7 @@ export default function Home() {
       {/* ── OPTICAL OPTIONS ── */}
       <section style={{ padding: "0 24px 100px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Front Optics
           </div>
           <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0 }}>
@@ -682,32 +682,32 @@ export default function Home() {
                 onClick={() => handleConfigChange("filter", opt.configValue)}
                 style={{
                   padding: "36px 32px",
-                  background: isSelected ? "rgba(64,75,113,0.22)" : "rgba(64,75,113,0.08)",
-                  border: `1px solid ${isSelected ? "rgba(126,179,255,0.5)" : "rgba(90,106,158,0.15)"}`,
+                  background: isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)",
+                  border: `1px solid ${isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)"}`,
                   borderRadius: "12px",
                   transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
                   cursor: "pointer",
-                  boxShadow: isSelected ? "0 0 0 2px rgba(126,179,255,0.25)" : "none",
+                  boxShadow: isSelected ? "0 0 0 2px rgba(0,36,88,0.15)" : "none",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.28)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(126,179,255,0.4)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(0,36,88,0.1)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,36,88,0.25)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(64,75,113,0.22)" : "rgba(64,75,113,0.08)";
-                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(126,179,255,0.5)" : "rgba(90,106,158,0.15)";
+                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)";
+                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)";
                 }}
               >
-                <div style={{ fontSize: "28px", marginBottom: "16px", color: "#7eb3ff" }}>{opt.icon}</div>
+                <div style={{ fontSize: "28px", marginBottom: "16px", color: "#002458" }}>{opt.icon}</div>
                 <div style={{ fontSize: "clamp(20px,2.5vw,28px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, marginBottom: "12px", letterSpacing: "0.02em" }}>{opt.name}</div>
-                <p style={{ color: "#8892b0", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>{opt.desc}</p>
+                <p style={{ color: "#4a6080", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>{opt.desc}</p>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                   {opt.tags.map((t) => (
-                    <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.15em", color: "#7eb3ff", border: "1px solid rgba(126,179,255,0.2)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
+                    <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.15em", color: "#002458", border: "1px solid rgba(0,36,88,0.12)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
                   ))}
                 </div>
                 {isSelected && (
-                  <div style={{ marginTop: "16px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#7eb3ff", textTransform: "uppercase" }}>
+                  <div style={{ marginTop: "16px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#002458", textTransform: "uppercase" }}>
                     ✓ Selected
                   </div>
                 )}
@@ -720,7 +720,7 @@ export default function Home() {
       {/* ── SIZES ── */}
       <section style={{ padding: "80px 24px 120px", maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
+          <div style={{ fontSize: "10px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "16px" }}>
             Available Configurations
           </div>
           <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0 }}>
@@ -743,34 +743,34 @@ export default function Home() {
                   display: "flex",
                   alignItems: "center",
                   padding: "20px 24px",
-                  background: isSelected ? "rgba(64,75,113,0.2)" : "rgba(64,75,113,0.06)",
-                  border: `1px solid ${isSelected ? "rgba(126,179,255,0.45)" : "rgba(90,106,158,0.12)"}`,
+                  background: isSelected ? "rgba(0,36,88,0.07)" : "rgba(0,36,88,0.04)",
+                  border: `1px solid ${isSelected ? "rgba(0,36,88,0.3)" : "rgba(0,36,88,0.08)"}`,
                   borderRadius: "12px",
                   gap: "20px",
                   transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
                   cursor: "pointer",
                   flexWrap: "wrap",
-                  boxShadow: isSelected ? "0 0 0 2px rgba(126,179,255,0.2)" : "none",
+                  boxShadow: isSelected ? "0 0 0 2px rgba(0,36,88,0.12)" : "none",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "rgba(64,75,113,0.25)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(126,179,255,0.4)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(0,36,88,0.08)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,36,88,0.25)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(64,75,113,0.2)" : "rgba(64,75,113,0.06)";
-                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(126,179,255,0.45)" : "rgba(90,106,158,0.12)";
+                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(0,36,88,0.07)" : "rgba(0,36,88,0.04)";
+                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(0,36,88,0.3)" : "rgba(0,36,88,0.08)";
                 }}
               >
                 <div style={{ flexShrink: 0, minWidth: "72px" }}>
-                  <div style={{ height: "3px", width: `${item.w * 0.5}px`, maxWidth: "100%", background: "linear-gradient(90deg, #404B71, #7eb3ff)", borderRadius: "1.5px" }} />
+                  <div style={{ height: "3px", width: `${item.w * 0.5}px`, maxWidth: "100%", background: "linear-gradient(90deg, #002458, #4a8fd4)", borderRadius: "1.5px" }} />
                 </div>
                 <div style={{ flex: 1, minWidth: "160px" }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: "#7eb3ff", letterSpacing: "0.15em", marginBottom: "4px" }}>{item.code}</div>
-                  <div style={{ color: "#8892b0", fontSize: "13px" }}>{item.note}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: "#002458", letterSpacing: "0.15em", marginBottom: "4px" }}>{item.code}</div>
+                  <div style={{ color: "#4a6080", fontSize: "13px" }}>{item.note}</div>
                 </div>
-                <div style={{ fontSize: "clamp(20px,3vw,34px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.12)", flexShrink: 0 }}>{item.size}</div>
+                <div style={{ fontSize: "clamp(20px,3vw,34px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: isSelected ? "rgba(0,36,88,0.4)" : "rgba(0,36,88,0.1)", flexShrink: 0 }}>{item.size}</div>
                 {isSelected && (
-                  <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#7eb3ff", textTransform: "uppercase", flexShrink: 0 }}>✓</div>
+                  <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#002458", textTransform: "uppercase", flexShrink: 0 }}>✓</div>
                 )}
               </div>
             );
@@ -800,8 +800,8 @@ export default function Home() {
               position: "absolute",
               inset: 0,
               backgroundImage: `
-                linear-gradient(rgba(90,106,158,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(90,106,158,0.05) 1px, transparent 1px)`,
+                linear-gradient(rgba(0,36,88,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,36,88,0.04) 1px, transparent 1px)`,
               backgroundSize: "60px 60px",
             }}
           />
@@ -832,7 +832,7 @@ export default function Home() {
                 style={{
                   fontSize: "10px",
                   letterSpacing: "0.4em",
-                  color: "#7eb3ff",
+                  color: "#002458",
                   textTransform: "uppercase",
                   fontFamily: "'JetBrains Mono', monospace",
                   marginBottom: "8px",
@@ -848,7 +848,7 @@ export default function Home() {
                   fontWeight: 700,
                   letterSpacing: "0.02em",
                   margin: 0,
-                  color: "#fff",
+                  color: "#002458",
                 }}
               >
                 {current.title}
@@ -856,7 +856,7 @@ export default function Home() {
               <p
                 style={{
                   fontSize: "clamp(12px,1.4vw,14px)",
-                  color: "#8892b0",
+                  color: "#4a6080",
                   marginTop: "6px",
                   letterSpacing: "0.04em",
                 }}
@@ -886,7 +886,7 @@ export default function Home() {
                 style={{
                   width: "clamp(100px,18vw,160px)",
                   height: "2px",
-                  background: "rgba(90,106,158,0.2)",
+                  background: "rgba(0,36,88,0.12)",
                   borderRadius: "1px",
                   overflow: "hidden",
                 }}
@@ -895,7 +895,7 @@ export default function Home() {
                   style={{
                     height: "100%",
                     width: `${progressPercent * 100}%`,
-                    background: "linear-gradient(90deg, #404B71, #7eb3ff)",
+                    background: "linear-gradient(90deg, #002458, #4a8fd4)",
                     borderRadius: "1px",
                     transition: "width 0.4s ease",
                   }}
@@ -905,7 +905,7 @@ export default function Home() {
                 style={{
                   fontSize: "10px",
                   fontFamily: "'JetBrains Mono', monospace",
-                  color: "#5a6a9e",
+                  color: "#7a90b0",
                   letterSpacing: "0.2em",
                 }}
               >
@@ -918,7 +918,7 @@ export default function Home() {
           <div
             style={{
               flex: "0 0 42%",
-              borderLeft: "1px solid rgba(90,106,158,0.15)",
+              borderLeft: "1px solid rgba(0,36,88,0.1)",
               overflowY: "auto",
               position: "relative",
               zIndex: 1,
@@ -954,7 +954,7 @@ export default function Home() {
             width: "300px",
             height: "300px",
             background:
-              "radial-gradient(ellipse, rgba(64,75,113,0.25) 0%, transparent 70%)",
+              "radial-gradient(ellipse, rgba(0,36,88,0.08) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -969,7 +969,7 @@ export default function Home() {
           >
             Ready to Illuminate?
           </h2>
-          <p style={{ color: "#8892b0", fontSize: "16px", marginBottom: "40px" }}>
+          <p style={{ color: "#4a6080", fontSize: "16px", marginBottom: "40px" }}>
             Contact Levan for more specific needs or applications.
           </p>
           <a
@@ -979,7 +979,7 @@ export default function Home() {
             style={{
               display: "inline-block",
               padding: "16px 48px",
-              background: "#404B71",
+              background: "#002458",
               color: "#fff",
               textDecoration: "none",
               fontSize: "13px",
@@ -987,19 +987,19 @@ export default function Home() {
               textTransform: "uppercase",
               fontFamily: "'Barlow Condensed', sans-serif",
               fontWeight: 600,
-              border: "1px solid rgba(126,179,255,0.2)",
+              border: "1px solid rgba(0,36,88,0.2)",
               borderRadius: "10px",
               transition: "background 0.2s, border-color 0.2s",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#5a6a9e";
+              (e.currentTarget as HTMLElement).style.background = "#003880";
               (e.currentTarget as HTMLElement).style.borderColor =
-                "rgba(126,179,255,0.5)";
+                "rgba(0,36,88,0.4)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#404B71";
+              (e.currentTarget as HTMLElement).style.background = "#002458";
               (e.currentTarget as HTMLElement).style.borderColor =
-                "rgba(126,179,255,0.2)";
+                "rgba(0,36,88,0.12)";
             }}
           >
             Contact Us
@@ -1010,10 +1010,10 @@ export default function Home() {
       {/* Footer */}
       <footer
         style={{
-          borderTop: "1px solid rgba(90,106,158,0.15)",
+          borderTop: "1px solid rgba(0,36,88,0.1)",
           padding: "32px 24px",
           textAlign: "center",
-          color: "#5a6a9e",
+          color: "#7a90b0",
           fontSize: "12px",
           letterSpacing: "0.15em",
           fontFamily: "'JetBrains Mono', monospace",
@@ -1036,31 +1036,29 @@ export default function Home() {
           alignItems: "center",
           gap: "8px",
           padding: "9px 18px",
-          background: "rgba(8,9,26,0.75)",
+          background: "rgba(0,36,88,0.88)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(126,179,255,0.25)",
+          border: "1px solid rgba(255,255,255,0.18)",
           borderRadius: "8px",
-          color: "#7eb3ff",
+          color: "#fff",
           textDecoration: "none",
           fontSize: "12px",
           fontFamily: "'Barlow Condensed', sans-serif",
           fontWeight: 600,
           letterSpacing: "0.18em",
           textTransform: "uppercase",
-          transition: "background 0.2s, border-color 0.2s, color 0.2s",
+          transition: "background 0.2s, border-color 0.2s",
         }}
         onMouseEnter={(e) => {
           const el = e.currentTarget as HTMLAnchorElement;
-          el.style.background = "rgba(64,75,113,0.85)";
-          el.style.borderColor = "rgba(126,179,255,0.6)";
-          el.style.color = "#fff";
+          el.style.background = "rgba(0,36,88,1)";
+          el.style.borderColor = "rgba(255,255,255,0.35)";
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget as HTMLAnchorElement;
-          el.style.background = "rgba(8,9,26,0.75)";
-          el.style.borderColor = "rgba(126,179,255,0.25)";
-          el.style.color = "#7eb3ff";
+          el.style.background = "rgba(0,36,88,0.88)";
+          el.style.borderColor = "rgba(255,255,255,0.18)";
         }}
       >
         <span style={{ fontSize: "14px", lineHeight: 1 }}>↗</span>
@@ -1186,7 +1184,7 @@ function ProductViewer({
           transform: "translateX(-50%)",
           width: "50%",
           height: "40px",
-          background: "rgba(64,75,113,0.55)",
+          background: "rgba(0,36,88,0.06)",
           filter: "blur(28px)",
           borderRadius: "50%",
         }}
@@ -1206,7 +1204,7 @@ function ProductViewer({
             objectFit: "contain",
             transition: "opacity 0.35s ease",
             opacity: i === frameIndex ? 1 : 0,
-            filter: "drop-shadow(0 0 36px rgba(64,75,113,0.5))",
+            filter: "drop-shadow(0 4px 24px rgba(0,36,88,0.1))",
           }}
         />
       ))}
@@ -1336,7 +1334,7 @@ function AnnotationDot({
           width: "20px",
           height: "20px",
           borderRadius: "50%",
-          border: "1px solid rgba(126,179,255,0.35)",
+          border: "1px solid rgba(0,36,88,0.18)",
           animation: visible ? "ring-pulse 2s ease-in-out infinite" : "none",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.4s",
@@ -1349,8 +1347,8 @@ function AnnotationDot({
           width: "9px",
           height: "9px",
           borderRadius: "50%",
-          background: "#7eb3ff",
-          boxShadow: "0 0 0 2px rgba(126,179,255,0.25), 0 0 14px rgba(126,179,255,0.5)",
+          background: "#002458",
+          boxShadow: "0 0 0 2px rgba(0,36,88,0.15), 0 0 14px rgba(0,36,88,0.35)",
           position: "relative",
           zIndex: 2,
           transition: "opacity 0.4s, transform 0.4s",
@@ -1378,8 +1376,8 @@ function AnnotationDot({
           >
             <defs>
               <linearGradient id={`annotLine${annotation.id}`} x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#7eb3ff" />
-                <stop offset="100%" stopColor="rgba(126,179,255,0.35)" />
+                <stop offset="0%" stopColor="#002458" />
+                <stop offset="100%" stopColor="rgba(0,36,88,0.18)" />
               </linearGradient>
             </defs>
             <line
@@ -1400,7 +1398,7 @@ function AnnotationDot({
               left: "clamp(-20px, -4vw, -14px)",
               width: visible ? "clamp(28px, 6vw, 40px)" : "0px",
               height: "1px",
-              background: "rgba(126,179,255,0.4)",
+              background: "rgba(0,36,88,0.25)",
               transition: "width 0.25s ease 0.28s",
             }}
           />
@@ -1424,7 +1422,7 @@ function AnnotationDot({
                 fontWeight: 600,
                 fontFamily: "'Barlow Condensed', sans-serif",
                 letterSpacing: "0.08em",
-                color: "#fff",
+                color: "#002458",
                 marginBottom: "3px",
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
@@ -1435,7 +1433,7 @@ function AnnotationDot({
             <div
               style={{
                 fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#8892b0",
+                color: "#4a6080",
                 fontFamily: "'JetBrains Mono', monospace",
                 lineHeight: 1.4,
                 whiteSpace: "nowrap",
@@ -1463,8 +1461,8 @@ function AnnotationDot({
           >
             <defs>
               <linearGradient id={`annotLine${annotation.id}`} x1="0" y1="0" x2="0" y2="110" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#7eb3ff" />
-                <stop offset="100%" stopColor="rgba(126,179,255,0.35)" />
+                <stop offset="0%" stopColor="#002458" />
+                <stop offset="100%" stopColor="rgba(0,36,88,0.18)" />
               </linearGradient>
             </defs>
             <line
@@ -1485,7 +1483,7 @@ function AnnotationDot({
               left: "clamp(-20px, -4vw, -14px)",
               width: visible ? "clamp(28px, 6vw, 40px)" : "0px",
               height: "1px",
-              background: "rgba(126,179,255,0.4)",
+              background: "rgba(0,36,88,0.25)",
               transition: "width 0.25s ease 0.28s",
             }}
           />
@@ -1506,7 +1504,7 @@ function AnnotationDot({
             <div
               style={{
                 fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#7eb3ff",
+                color: "#002458",
                 fontFamily: "'JetBrains Mono', monospace",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
@@ -1523,7 +1521,7 @@ function AnnotationDot({
                       fontSize: `clamp(${18 + i * 4}px, ${2.0 + i * 0.5}vw, ${26 + i * 5}px)`,
                       fontFamily: "'Barlow Condensed', sans-serif",
                       fontWeight: 700,
-                      color: "#fff",
+                      color: "#002458",
                       lineHeight: 1,
                     }}
                   >
@@ -1532,7 +1530,7 @@ function AnnotationDot({
                   <div
                     style={{
                       fontSize: "clamp(11px,1.2vw,13px)",
-                      color: "#5a6a9e",
+                      color: "#7a90b0",
                       fontFamily: "'JetBrains Mono', monospace",
                       letterSpacing: "0.1em",
                     }}
@@ -1562,8 +1560,8 @@ function AnnotationDot({
           >
             <defs>
               <linearGradient id={`annotLine${annotation.id}`} x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#7eb3ff" />
-                <stop offset="100%" stopColor="rgba(126,179,255,0.35)" />
+                <stop offset="0%" stopColor="#002458" />
+                <stop offset="100%" stopColor="rgba(0,36,88,0.18)" />
               </linearGradient>
             </defs>
             <line
@@ -1584,7 +1582,7 @@ function AnnotationDot({
               right: "60px",
               width: visible ? "clamp(24px, 5vw, 36px)" : "0px",
               height: "1px",
-              background: "rgba(126,179,255,0.4)",
+              background: "rgba(0,36,88,0.25)",
               transition: "width 0.25s ease 0.28s",
             }}
           />
@@ -1608,7 +1606,7 @@ function AnnotationDot({
                 fontWeight: 600,
                 fontFamily: "'Barlow Condensed', sans-serif",
                 letterSpacing: "0.08em",
-                color: "#fff",
+                color: "#002458",
                 marginBottom: "3px",
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
@@ -1619,7 +1617,7 @@ function AnnotationDot({
             <div
               style={{
                 fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#8892b0",
+                color: "#4a6080",
                 fontFamily: "'JetBrains Mono', monospace",
                 lineHeight: 1.4,
                 whiteSpace: "pre-line",
@@ -1648,8 +1646,8 @@ function AnnotationDot({
           >
             <defs>
               <linearGradient id={`annotLine${annotation.id}`} x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#7eb3ff" />
-                <stop offset="100%" stopColor="rgba(126,179,255,0.35)" />
+                <stop offset="0%" stopColor="#002458" />
+                <stop offset="100%" stopColor="rgba(0,36,88,0.18)" />
               </linearGradient>
             </defs>
             <line
@@ -1670,7 +1668,7 @@ function AnnotationDot({
               left: `${aX + 5}px`,
               width: visible ? "clamp(24px, 5vw, 36px)" : "0px",
               height: "1px",
-              background: "rgba(126,179,255,0.4)",
+              background: "rgba(0,36,88,0.25)",
               transition: "width 0.25s ease 0.28s",
             }}
           />
@@ -1694,7 +1692,7 @@ function AnnotationDot({
                 fontWeight: 600,
                 fontFamily: "'Barlow Condensed', sans-serif",
                 letterSpacing: "0.08em",
-                color: "#fff",
+                color: "#002458",
                 marginBottom: "3px",
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
@@ -1705,7 +1703,7 @@ function AnnotationDot({
             <div
               style={{
                 fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#8892b0",
+                color: "#4a6080",
                 fontFamily: "'JetBrains Mono', monospace",
                 lineHeight: 1.4,
                 whiteSpace: "nowrap",
@@ -1725,7 +1723,7 @@ function AnnotationDot({
               left: "14px",
               width: visible ? LINE_LENGTH : "0px",
               height: "1px",
-              background: "linear-gradient(90deg, #7eb3ff, rgba(126,179,255,0.25))",
+              background: "linear-gradient(90deg, #002458, rgba(0,36,88,0.15))",
               transition: "width 0.35s ease 0.12s",
             }}
           />
@@ -1747,7 +1745,7 @@ function AnnotationDot({
                 fontWeight: 600,
                 fontFamily: "'Barlow Condensed', sans-serif",
                 letterSpacing: "0.08em",
-                color: "#fff",
+                color: "#002458",
                 marginBottom: "3px",
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
@@ -1758,7 +1756,7 @@ function AnnotationDot({
             <div
               style={{
                 fontSize: "clamp(12px,1.4vw,14px)",
-                color: "#8892b0",
+                color: "#4a6080",
                 fontFamily: "'JetBrains Mono', monospace",
                 lineHeight: 1.4,
                 whiteSpace: "nowrap",
@@ -1809,11 +1807,11 @@ function ConfigPanel({
       }}
     >
       {/* Header */}
-      <div style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(90,106,158,0.15)" }}>
-        <div style={{ fontSize: "12px", letterSpacing: "0.4em", color: "#7eb3ff", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px" }}>
+      <div style={{ paddingBottom: "10px", borderBottom: "1px solid rgba(0,36,88,0.1)" }}>
+        <div style={{ fontSize: "12px", letterSpacing: "0.4em", color: "#002458", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px" }}>
           Configure
         </div>
-        <div style={{ fontSize: "clamp(22px,2.4vw,30px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#fff", letterSpacing: "0.04em" }}>
+        <div style={{ fontSize: "clamp(22px,2.4vw,30px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, color: "#002458", letterSpacing: "0.04em" }}>
           C-Bar
         </div>
       </div>
@@ -1827,12 +1825,12 @@ function ConfigPanel({
             style={{
               padding: "12px 14px",
               borderRadius: "8px",
-              border: `1px solid ${isHighlighted ? "rgba(126,179,255,0.4)" : "rgba(90,106,158,0.12)"}`,
-              background: isHighlighted ? "rgba(64,75,113,0.18)" : "transparent",
+              border: `1px solid ${isHighlighted ? "rgba(0,36,88,0.25)" : "rgba(0,36,88,0.08)"}`,
+              background: isHighlighted ? "rgba(0,36,88,0.06)" : "transparent",
               transition: "all 0.4s ease",
             }}
           >
-            <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: isHighlighted ? "#7eb3ff" : "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px", transition: "color 0.4s" }}>
+            <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: isHighlighted ? "#002458" : "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px", transition: "color 0.4s" }}>
               {section.label}
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
@@ -1846,10 +1844,10 @@ function ConfigPanel({
                         padding: "6px 14px",
                         fontSize: "13px",
                         fontFamily: "'JetBrains Mono', monospace",
-                        border: `1px solid ${sel ? "#7eb3ff" : "rgba(90,106,158,0.3)"}`,
+                        border: `1px solid ${sel ? "#002458" : "rgba(0,36,88,0.18)"}`,
                         borderRadius: "4px",
-                        background: sel ? "rgba(126,179,255,0.15)" : "transparent",
-                        color: sel ? "#7eb3ff" : "#8892b0",
+                        background: sel ? "rgba(0,36,88,0.08)" : "transparent",
+                        color: sel ? "#002458" : "#4a6080",
                         cursor: "pointer",
                         transition: "all 0.15s",
                       }}
@@ -1857,7 +1855,7 @@ function ConfigPanel({
                       {opt.label}
                     </button>
                     {opt.note && (
-                      <div style={{ fontSize: "11px", color: "#5a6a9e", fontFamily: "'JetBrains Mono', monospace", paddingLeft: "2px", maxWidth: "180px", lineHeight: 1.3 }}>
+                      <div style={{ fontSize: "11px", color: "#7a90b0", fontFamily: "'JetBrains Mono', monospace", paddingLeft: "2px", maxWidth: "180px", lineHeight: 1.3 }}>
                         {opt.note}
                       </div>
                     )}
@@ -1870,8 +1868,8 @@ function ConfigPanel({
       })}
 
       {/* Quantity */}
-      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)" }}>
-        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(0,36,88,0.08)" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
           Quantity
         </div>
         <input
@@ -1879,13 +1877,13 @@ function ConfigPanel({
           min="1"
           value={config.quantity}
           onChange={e => onChange("quantity", e.target.value)}
-          style={{ width: "80px", padding: "6px 10px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "15px", fontFamily: "'JetBrains Mono', monospace" }}
+          style={{ width: "80px", padding: "6px 10px", background: "transparent", border: "1px solid rgba(0,36,88,0.18)", borderRadius: "4px", color: "#002458", fontSize: "15px", fontFamily: "'JetBrains Mono', monospace" }}
         />
       </div>
 
       {/* Notes */}
-      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)" }}>
-        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(0,36,88,0.08)" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "10px" }}>
           Need help? Write your comments below
         </div>
         <textarea
@@ -1893,13 +1891,13 @@ function ConfigPanel({
           onChange={e => onChange("notes", e.target.value)}
           placeholder="Additional requirements, questions, or special configurations..."
           rows={2}
-          style={{ width: "100%", padding: "8px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", resize: "vertical", boxSizing: "border-box", outline: "none" }}
+          style={{ width: "100%", padding: "8px 12px", background: "transparent", border: "1px solid rgba(0,36,88,0.18)", borderRadius: "4px", color: "#002458", fontSize: "14px", fontFamily: "'Barlow', sans-serif", resize: "vertical", boxSizing: "border-box", outline: "none" }}
         />
       </div>
 
       {/* Contact info */}
-      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(90,106,158,0.12)", display: "flex", flexDirection: "column", gap: "10px" }}>
-        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#5a6a9e", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>
+      <div style={{ padding: "12px 14px", borderRadius: "8px", border: "1px solid rgba(0,36,88,0.08)", display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>
           Your Contact
         </div>
         <input
@@ -1907,20 +1905,20 @@ function ConfigPanel({
           placeholder="Name"
           value={contactName}
           onChange={e => onNameChange(e.target.value)}
-          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
+          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(0,36,88,0.18)", borderRadius: "4px", color: "#002458", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
         />
         <input
           type="email"
           placeholder="Email"
           value={contactEmail}
           onChange={e => onEmailChange(e.target.value)}
-          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(90,106,158,0.3)", borderRadius: "4px", color: "#fff", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
+          style={{ width: "100%", padding: "6px 12px", background: "transparent", border: "1px solid rgba(0,36,88,0.18)", borderRadius: "4px", color: "#002458", fontSize: "14px", fontFamily: "'Barlow', sans-serif", boxSizing: "border-box", outline: "none" }}
         />
       </div>
 
       {/* Submit */}
       {formStatus === "success" ? (
-        <div style={{ marginTop: "4px", padding: "14px 20px", borderRadius: "8px", border: "1px solid rgba(126,179,255,0.3)", background: "rgba(64,75,113,0.2)", color: "#7eb3ff", fontSize: "14px", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, textAlign: "center" }}>
+        <div style={{ marginTop: "4px", padding: "14px 20px", borderRadius: "8px", border: "1px solid rgba(0,36,88,0.2)", background: "rgba(0,36,88,0.07)", color: "#002458", fontSize: "14px", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, textAlign: "center" }}>
           Thank you for your submission, please wait 1 business day
         </div>
       ) : (
@@ -1929,10 +1927,10 @@ function ConfigPanel({
           style={{
             marginTop: "4px",
             padding: "14px 20px",
-            background: ready ? "#404B71" : "rgba(64,75,113,0.2)",
-            border: `1px solid ${ready ? "rgba(126,179,255,0.3)" : "rgba(90,106,158,0.15)"}`,
+            background: ready ? "#002458" : "rgba(0,36,88,0.07)",
+            border: `1px solid ${ready ? "rgba(0,36,88,0.2)" : "rgba(0,36,88,0.1)"}`,
             borderRadius: "8px",
-            color: ready ? "#fff" : "#5a6a9e",
+            color: ready ? "#fff" : "#7a90b0",
             fontSize: "14px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
