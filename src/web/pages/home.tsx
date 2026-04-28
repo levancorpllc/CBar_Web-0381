@@ -922,22 +922,21 @@ export default function Home() {
               overflowY: "auto",
               position: "relative",
               zIndex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
             }}
           >
-            <ConfigPanel
-              stage={stage}
-              config={config}
-              onChange={handleConfigChange}
-              onSubmit={handleSubmit}
-              contactName={contactName}
-              contactEmail={contactEmail}
-              formStatus={formStatus}
-              onNameChange={setContactName}
-              onEmailChange={setContactEmail}
-            />
+            <div style={{ minHeight: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <ConfigPanel
+                stage={stage}
+                config={config}
+                onChange={handleConfigChange}
+                onSubmit={handleSubmit}
+                contactName={contactName}
+                contactEmail={contactEmail}
+                formStatus={formStatus}
+                onNameChange={setContactName}
+                onEmailChange={setContactEmail}
+              />
+            </div>
           </div>
         </div>
       </div>
