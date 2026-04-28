@@ -667,53 +667,113 @@ export default function Home() {
             Front Optics
           </div>
           <h2 style={{ fontSize: "clamp(24px,4vw,48px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, margin: 0 }}>
-            Diffuser or Polarized Filter
+            Diffuser and Polarized Filter
           </h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))", gap: "2px" }}>
-          {[
-            { name: "Transparent Diffuser", configValue: "none",      icon: "◎", desc: "Homogenises the beam for even, shadow-free illumination across the full LED array. Ideal for surface inspection and texture analysis.", tags: ["Even field", "Reduced hot-spots", "Standard setup"] },
-            { name: "Polarized Filter",     configValue: "polarized", icon: "⊗", desc: "Eliminates specular reflections from shiny or metallic surfaces. Combine with a cross-polarizer on the camera for glare-free imaging.", tags: ["Anti-glare", "Metallic surfaces", "Cross-pol compatible"] },
-          ].map((opt) => {
-            const isSelected = config.filter === opt.configValue;
-            return (
-              <div
-                key={opt.name}
-                onClick={() => handleConfigChange("filter", opt.configValue)}
-                style={{
-                  padding: "36px 32px",
-                  background: isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)",
-                  border: `1px solid ${isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)"}`,
-                  borderRadius: "12px",
-                  transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
-                  cursor: "pointer",
-                  boxShadow: isSelected ? "0 0 0 2px rgba(0,36,88,0.15)" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "rgba(0,36,88,0.1)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,36,88,0.25)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)";
-                  (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)";
-                }}
-              >
-                <div style={{ fontSize: "28px", marginBottom: "16px", color: "#002458" }}>{opt.icon}</div>
-                <div style={{ fontSize: "clamp(20px,2.5vw,28px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, marginBottom: "12px", letterSpacing: "0.02em" }}>{opt.name}</div>
-                <p style={{ color: "#4a6080", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>{opt.desc}</p>
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  {opt.tags.map((t) => (
-                    <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.15em", color: "#002458", border: "1px solid rgba(0,36,88,0.12)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
-                  ))}
-                </div>
-                {isSelected && (
-                  <div style={{ marginTop: "16px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#002458", textTransform: "uppercase" }}>
-                    ✓ Selected
+
+        {/* — Diffuser row — */}
+        <div style={{ marginBottom: "32px" }}>
+          <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
+            Diffuser
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px,1fr))", gap: "2px" }}>
+            {[
+              { name: "Transparent", configValue: "clear",      icon: "◎", desc: "Clear front glass — maximum light output, no diffusion. Best for direct illumination on diffuse surfaces.", tags: ["Max output", "No diffusion", "Standard"] },
+              { name: "Satin",       configValue: "satin",      icon: "◑", desc: "Soft diffusion — smooths hot-spots while maintaining high intensity. Good all-round balance for general inspection.", tags: ["Soft diffusion", "Reduced hot-spots"] },
+              { name: "White Opal",  configValue: "white-opal", icon: "●", desc: "Strong diffusion — ultra-uniform illumination field. Ideal for surface inspection requiring even, shadow-free coverage.", tags: ["Max diffusion", "Ultra-uniform"] },
+            ].map((opt) => {
+              const isSelected = config.diffuser === opt.configValue;
+              return (
+                <div
+                  key={opt.name}
+                  onClick={() => handleConfigChange("diffuser", opt.configValue)}
+                  style={{
+                    padding: "28px 24px",
+                    background: isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)",
+                    border: `1px solid ${isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)"}`,
+                    borderRadius: "12px",
+                    transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+                    cursor: "pointer",
+                    boxShadow: isSelected ? "0 0 0 2px rgba(0,36,88,0.15)" : "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(0,36,88,0.1)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,36,88,0.25)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)";
+                    (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)";
+                  }}
+                >
+                  <div style={{ fontSize: "24px", marginBottom: "14px", color: "#002458" }}>{opt.icon}</div>
+                  <div style={{ fontSize: "clamp(18px,2.2vw,24px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, marginBottom: "10px", letterSpacing: "0.02em" }}>{opt.name}</div>
+                  <p style={{ color: "#4a6080", fontSize: "13px", lineHeight: 1.6, marginBottom: "16px" }}>{opt.desc}</p>
+                  <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                    {opt.tags.map((t) => (
+                      <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", color: "#002458", border: "1px solid rgba(0,36,88,0.12)", padding: "3px 8px", textTransform: "uppercase" }}>{t}</span>
+                    ))}
                   </div>
-                )}
-              </div>
-            );
-          })}
+                  {isSelected && (
+                    <div style={{ marginTop: "12px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#002458", textTransform: "uppercase" }}>
+                      ✓ Selected
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* — Polarizer row — */}
+        <div>
+          <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#7a90b0", textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace", marginBottom: "12px" }}>
+            Polarizer
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))", gap: "2px" }}>
+            {[
+              { name: "Without Polarizer", configValue: "none",      icon: "○", desc: "Standard setup — no polarization applied. Best light output, suitable for most machine vision applications.", tags: ["Standard", "Max output"] },
+              { name: "With Polarizer",    configValue: "polarized", icon: "⊗", desc: "Eliminates specular reflections on metallic or glossy surfaces. Combine with a cross-polarizer on the camera for fully glare-free imaging.", tags: ["Anti-glare", "Metallic surfaces", "Cross-pol compatible"] },
+            ].map((opt) => {
+              const isSelected = config.filter === opt.configValue;
+              return (
+                <div
+                  key={opt.name}
+                  onClick={() => handleConfigChange("filter", opt.configValue)}
+                  style={{
+                    padding: "28px 24px",
+                    background: isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)",
+                    border: `1px solid ${isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)"}`,
+                    borderRadius: "12px",
+                    transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+                    cursor: "pointer",
+                    boxShadow: isSelected ? "0 0 0 2px rgba(0,36,88,0.15)" : "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(0,36,88,0.1)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,36,88,0.25)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = isSelected ? "rgba(0,36,88,0.09)" : "rgba(0,36,88,0.05)";
+                    (e.currentTarget as HTMLElement).style.borderColor = isSelected ? "rgba(0,36,88,0.35)" : "rgba(0,36,88,0.1)";
+                  }}
+                >
+                  <div style={{ fontSize: "24px", marginBottom: "14px", color: "#002458" }}>{opt.icon}</div>
+                  <div style={{ fontSize: "clamp(18px,2.2vw,24px)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, marginBottom: "10px", letterSpacing: "0.02em" }}>{opt.name}</div>
+                  <p style={{ color: "#4a6080", fontSize: "13px", lineHeight: 1.6, marginBottom: "16px" }}>{opt.desc}</p>
+                  <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                    {opt.tags.map((t) => (
+                      <span key={t} style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", color: "#002458", border: "1px solid rgba(0,36,88,0.12)", padding: "3px 8px", textTransform: "uppercase" }}>{t}</span>
+                    ))}
+                  </div>
+                  {isSelected && (
+                    <div style={{ marginTop: "12px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.2em", color: "#002458", textTransform: "uppercase" }}>
+                      ✓ Selected
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
